@@ -6,7 +6,7 @@ $heroSlides = [
         'url' => '#services',
         'eyebrow' => '',
         'title' => '',
-        'summary' => '.',
+        'summary' => '',
         'cta' => '',
     ],
     [
@@ -356,8 +356,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span class="eyebrow"><?php echo htmlspecialchars($slide['eyebrow']); ?></span>
                                 <strong><?php echo htmlspecialchars($slide['title']); ?></strong>
                                 <span><?php echo htmlspecialchars($slide['summary']); ?></span>
-                                <em><?php echo htmlspecialchars($slide['cta']); ?></em>
-                            </span>
+                                <?php if (!empty($slide['cta'])): ?>
+                                        <em><?php echo htmlspecialchars($slide['cta']); ?></em>
+                                    <?php endif; ?>
+                             </span>
                         </a>
                     </article>
                 <?php endforeach; ?>

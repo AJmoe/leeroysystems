@@ -429,9 +429,7 @@ h3 {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(90deg, rgba(34, 50, 88, 0.9), rgba(34, 50, 88, 0.52), rgba(34, 50, 88, 0.18)),
-        linear-gradient(0deg, rgba(34, 50, 88, 0.42), transparent 45%);
+    background: linear-gradient(0deg, rgba(34, 50, 88, 0.28), transparent 55%);
 }
 
 .hero-slide-content {
@@ -2403,6 +2401,10 @@ h3 {
     .footer-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+    .cs-cards {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
 }
 
 @media (max-width: 760px) {
@@ -2423,22 +2425,26 @@ h3 {
         display: block;
     }
 
-    .site-nav > ul {
-        position: absolute;
-        left: 14px;
-        right: 14px;
-        top: 76px;
-        display: none;
-        background: var(--white);
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        box-shadow: var(--shadow);
-        padding: 14px;
-    }
+   .site-nav > ul {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 70px;
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 8px;
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+    z-index: 50;
+}
 
-    .site-nav > ul.open {
-        display: grid;
-    }
+.site-nav > ul.open {
+    display: flex;
+    flex-direction: column;
+}
 
     .site-nav li {
         width: 100%;
@@ -2449,16 +2455,35 @@ h3 {
         padding: 9px 0;
     }
 
-    .dropdown-menu {
+   .dropdown-menu {
         position: static;
         min-width: 0;
-        display: grid;
-        margin: 4px 0 8px 12px;
-        padding: 8px;
+        display: none;
+        margin: 0 0 4px 12px;
+        padding: 4px;
         box-shadow: none;
         opacity: 1;
         visibility: visible;
         transform: none;
+        border: none;
+        border-left: 2px solid var(--line);
+        border-radius: 0;
+    }
+
+    .nav-dropdown.open .dropdown-menu {
+        display: grid;
+    }
+    .cs-cards {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+
+    .cs-card {
+        height: 400px;
+    }
+.cs-card-details {
+        transform: none;
+        opacity: 1;
     }
 
     .dropdown-menu a {
@@ -2590,13 +2615,12 @@ h3 {
     .contact-form {
         grid-template-columns: 1fr;
     }
-
-    .footer-bottom {
+.footer-bottom {
         flex-direction: column;
     }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 520px)  {
     .stats-grid,
     .service-grid,
     .partner-logos {
