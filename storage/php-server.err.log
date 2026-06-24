@@ -1,0 +1,34 @@
+[Wed Jun 17 09:17:14 2026] PHP 8.2.31 Development Server (http://localhost:8088) started
+[Wed Jun 17 09:17:26 2026] [::1]:63427 Accepted
+[Wed Jun 17 09:17:27 2026] [::1]:63427 [200]: GET /
+[Wed Jun 17 09:17:27 2026] [::1]:63427 Closing
+[Wed Jun 17 09:17:37 2026] [::1]:55023 Accepted
+[Wed Jun 17 09:17:37 2026] [::1]:49854 Accepted
+[Wed Jun 17 09:17:37 2026] [::1]:55023 [200]: GET /
+[Wed Jun 17 09:17:37 2026] [::1]:55023 Closing
+[Wed Jun 17 09:17:37 2026] [::1]:49854 [200]: GET /assets/css/styles.css
+[Wed Jun 17 09:17:37 2026] [::1]:63279 Accepted
+[Wed Jun 17 09:17:37 2026] [::1]:53193 Accepted
+[Wed Jun 17 09:17:37 2026] [::1]:63279 [200]: GET /assets/img/leeroy-systems.jpg
+[Wed Jun 17 09:17:37 2026] [::1]:53193 [200]: GET /assets/img/hero-smart-metering.jpg
+[Wed Jun 17 09:17:37 2026] [::1]:49854 Closing
+[Wed Jun 17 09:17:37 2026] [::1]:63279 Closing
+[Wed Jun 17 09:17:37 2026] [::1]:53193 Closing
+[Wed Jun 17 09:17:37 2026] [::1]:56586 Accepted
+[Wed Jun 17 09:17:37 2026] [::1]:64784 Accepted
+[Wed Jun 17 09:17:37 2026] [::1]:56586 [200]: GET /assets/img/hero-water-network.jpg
+[Wed Jun 17 09:17:37 2026] [::1]:58667 Accepted
+[Wed Jun 17 09:17:37 2026] [::1]:64784 [200]: GET /assets/img/about-operations.jpg
+[Wed Jun 17 09:17:37 2026] [::1]:58667 [200]: GET /assets/js/main.js
+[Wed Jun 17 09:17:37 2026] [::1]:56586 Closing
+[Wed Jun 17 09:17:37 2026] [::1]:64784 Closing
+[Wed Jun 17 09:17:37 2026] [::1]:58667 Closing
+[Wed Jun 17 09:17:39 2026] [::1]:64843 Accepted
+[Wed Jun 17 09:17:39 2026] [::1]:64843 [404]: GET /favicon.ico - No such file or directory
+[Wed Jun 17 09:17:39 2026] [::1]:64843 Closing
+[Wed Jun 17 15:24:09 2026] [::1]:52241 Accepted
+[Wed Jun 17 15:24:09 2026] [::1]:58795 Accepted
+[Wed Jun 17 15:25:37 2026] [::1]:58795 Closed without sending a request; it was probably just an unused speculative preconnection
+[Wed Jun 17 15:25:37 2026] [::1]:58795 Closing
+[Wed Jun 17 15:25:37 2026] [::1]:52241 Closed without sending a request; it was probably just an unused speculative preconnection
+[Wed Jun 17 15:25:37 2026] [::1]:52241 Closing
