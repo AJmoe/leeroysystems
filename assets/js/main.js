@@ -2,6 +2,7 @@ const header = document.querySelector('[data-header]');
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('#site-menu');
 const navLinks = document.querySelectorAll('.site-nav a');
+const mobileMenuQuery = window.matchMedia('(max-width: 760px)');
 const revealItems = document.querySelectorAll('.reveal');
 const tabButtons = document.querySelectorAll('[role="tab"]');
 const tabPanels = document.querySelectorAll('.tab-panel');
@@ -23,11 +24,49 @@ if (navToggle && navMenu) {
 
     navLinks.forEach((link) => {
         link.addEventListener('click', () => {
+            const isDropdownTrigger = link.parentElement?.classList.contains('nav-dropdown') &&
+                link.parentElement.firstElementChild === link;
+
+            if (mobileMenuQuery.matches && isDropdownTrigger) {
+                return;
+            }
+
             navMenu.classList.remove('open');
             navToggle.setAttribute('aria-expanded', 'false');
+            mobileDropdowns.forEach((dropdown) => dropdown.classList.remove('open'));
         });
     });
 }
+
+const mobileDropdowns = document.querySelectorAll('.nav-dropdown');
+
+mobileDropdowns.forEach((dropdown) => {
+    const trigger = Array.from(dropdown.children).find((child) => child.tagName === 'A');
+
+    if (!trigger) return;
+
+    trigger.setAttribute('aria-expanded', 'false');
+
+    trigger.addEventListener('click', (e) => {
+
+        if (mobileMenuQuery.matches) {
+
+            e.preventDefault();
+
+            mobileDropdowns.forEach((item) => {
+                if (item !== dropdown) {
+                    item.classList.remove('open');
+                    const itemTrigger = Array.from(item.children).find((child) => child.tagName === 'A');
+                    itemTrigger?.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            const isOpen = dropdown.classList.toggle('open');
+            trigger.setAttribute('aria-expanded', String(isOpen));
+        }
+    });
+});
+
 
 const setActiveLink = () => {
     const fromTop = window.scrollY + 120;
