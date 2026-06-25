@@ -1893,20 +1893,16 @@ h3 {
     margin: 0;
 }
 
-.form-alert + .form-alert {
-    margin-top: 8px;
-}
-
 .form-alert.success {
-    background: rgba(34, 50, 88, 0.08);
-    border: 1px solid rgba(34, 50, 88, 0.22);
-    color: var(--navy);
+    background: rgba(34, 150, 90, 0.10);
+    border: 1px solid rgba(34, 150, 90, 0.35);
+    color: #1a7a42;
 }
 
 .form-alert.error {
-    background: rgba(147, 152, 154, 0.12);
-    border: 1px solid rgba(147, 152, 154, 0.35);
-    color: var(--navy);
+    background: rgba(200, 40, 40, 0.08);
+    border: 1px solid rgba(200, 40, 40, 0.30);
+    color: #b91c1c;
 }
 
 /* Office location cards */
@@ -2810,7 +2806,6 @@ h3 {
     transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-xl);
 }
-
 .careers-upload {
     position: relative;
     border: 2px dashed var(--line);
@@ -2832,6 +2827,12 @@ h3 {
     background: rgba(34, 50, 88, 0.04);
 }
 
+.careers-upload.has-file {
+    border-color: #1a7a42;
+    background: rgba(34, 150, 90, 0.06);
+    border-style: solid;
+}
+
 .careers-upload svg {
     width: 32px;
     height: 32px;
@@ -2845,6 +2846,39 @@ h3 {
     cursor: pointer;
     width: 100%;
     height: 100%;
+}
+
+.careers-upload-preview {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: rgba(34, 150, 90, 0.10);
+    border: 1px solid rgba(34, 150, 90, 0.30);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.careers-upload-preview.visible {
+    display: flex;
+}
+
+.careers-upload-preview svg {
+    width: 20px;
+    height: 20px;
+    color: #1a7a42;
+    flex-shrink: 0;
+}
+
+.careers-upload-preview span {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1a7a42;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .cs-field-label {
