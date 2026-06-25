@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $date     = date('Y-m-d');
         $ext      = pathinfo($cvFile['name'], PATHINFO_EXTENSION);
         $filename = "cv_{$safeName}_{$date}.{$ext}";
-        $uploadDir = __DIR__ . '/../storage/cvs/';
+       $uploadDir = dirname(__DIR__) . '/storage/cvs/';
         $uploadPath = $uploadDir . $filename;
 
         if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'submitted_at' => date('c'),
             ];
 
-            $storageFile = __DIR__ . '/../storage/applications.json';
+            $storageFile = dirname(__DIR__) . '/storage/applications.json';
             $entries = [];
             if (file_exists($storageFile)) {
                 $existing = json_decode(file_get_contents($storageFile), true);
