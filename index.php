@@ -338,6 +338,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php endforeach; ?>
                         </ul>
                     </li>
+                    <li><a href="careers.php">Careers</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
