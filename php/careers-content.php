@@ -171,7 +171,7 @@ function renderIcon(string $name): string {
 
         <!-- HERO -->
         <section class="detail-hero">
-            <img src="assets/img/ab-us1.jpg" alt="Leeroy Systems team">
+            <img src="assets/img/careers.png" alt="Leeroy Systems team">
             <span class="detail-hero-overlay"></span>
             <div class="container detail-hero-content">
                 <p class="eyebrow">Careers</p>
