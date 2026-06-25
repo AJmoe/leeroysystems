@@ -71,24 +71,34 @@ a {
 }
 
 .header-inner {
-    min-height: 78px;
+    min-height: 90px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
 }
 
+.brand {
+    display: flex;
+    align-items: center;
+}
+
 .brand img {
-    width: 132px;
-    height: 58px;
+    width: 180px;
+    height: 80px;
     object-fit: contain;
+    transition: transform 220ms ease;
+}
+
+.brand img:hover {
+    transform: scale(1.05);
 }
 
 .site-nav > ul {
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 22px;
+    gap: 8px;
     margin: 0;
     padding: 0;
 }
@@ -97,16 +107,31 @@ a {
     position: relative;
 }
 
-.site-nav a {
+.site-nav > ul > li > a {
     text-decoration: none;
     font-weight: 700;
     font-size: 0.94rem;
     color: var(--navy);
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    transition: background 220ms ease, color 220ms ease, border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
 }
 
-.site-nav a:hover,
-.site-nav a.active {
-    color: var(--teal);
+.site-nav > ul > li > a:hover:not(.active) {
+    background: rgba(34, 50, 88, 0.07);
+    color: var(--navy);
+    border-color: rgba(34, 50, 88, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 50, 88, 0.10);
+}
+
+.site-nav > ul > li > a.active {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
 }
 
 .nav-dropdown > a::after {
@@ -118,27 +143,42 @@ a {
     border-bottom: 2px solid currentColor;
     margin-left: 8px;
     transform: translateY(-3px) rotate(45deg);
+    transition: border-color 220ms ease;
 }
 
 .dropdown-menu {
     position: absolute;
-    top: calc(100% + 18px);
+    top: calc(100% + 14px);
     left: 0;
     z-index: 30;
-    min-width: 260px;
+    min-width: 270px;
     list-style: none;
     display: grid;
-    gap: 4px;
+    gap: 2px;
     margin: 0;
-    padding: 10px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
+    padding: 8px;
+    border: 1px solid rgba(34, 50, 88, 0.12);
+    border-radius: 12px;
     background: var(--white);
-    box-shadow: var(--shadow);
+    box-shadow: 0 20px 50px rgba(34, 50, 88, 0.16), 0 4px 12px rgba(34, 50, 88, 0.08);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(8px);
+    transform: translateY(6px);
     transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+}
+
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    background: var(--white);
+    border-left: 1px solid rgba(34, 50, 88, 0.12);
+    border-top: 1px solid rgba(34, 50, 88, 0.12);
+    transform: rotate(45deg);
+    border-radius: 2px 0 0 0;
 }
 
 .nav-dropdown:hover .dropdown-menu,
@@ -149,16 +189,68 @@ a {
 }
 
 .dropdown-menu a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     border-radius: 8px;
     padding: 10px 12px;
     color: var(--navy);
-    font-size: 0.86rem;
-    line-height: 1.25;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background 160ms ease;
+}
+
+.dropdown-menu a .dd-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: rgba(34, 50, 88, 0.08);
+    color: var(--navy);
+    display: grid;
+    place-items: center;
+    transition: background 160ms ease, color 160ms ease;
 }
 
 .dropdown-menu a:hover {
+    background: rgba(34, 50, 88, 0.06);
+    color: var(--navy);
+    transform: none;
+    box-shadow: none;
+}
+
+.dropdown-menu a:hover .dd-icon {
+    background: var(--navy);
+    color: var(--white);
+}
+
+.dropdown-menu a .dd-icon svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Subtitle text inside dropdown items */
+.dropdown-menu a .dd-sub {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-top: 1px;
+}
+
+/* Thin divider between dropdown groups */
+.dropdown-divider {
+    height: 1px;
     background: rgba(34, 50, 88, 0.08);
+    margin: 4px 4px;
+    list-style: none;
 }
 
 .nav-toggle {
@@ -2421,17 +2513,19 @@ h3 {
         display: block;
     }
 
-   .site-nav > ul {
+   /* Inside @media (max-width: 760px) */
+.site-nav > ul {
     position: absolute;
-    left: 14px;
-    right: 14px;
+    left: auto;          /* remove left anchor */
+    right: 14px;         /* pin to right side */
     top: 70px;
+    width: 240px;        /* fixed width — adjust to taste */
     display: none;
     background: var(--white);
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: var(--shadow);
-    padding: 8px;
+    padding: 6px;
     max-height: calc(100vh - 90px);
     overflow-y: auto;
     z-index: 50;

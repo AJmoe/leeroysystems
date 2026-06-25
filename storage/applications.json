@@ -61,5 +61,14 @@
         "cover": "testing",
         "cv_file": "cv_James_Bond_2026-06-25.pdf",
         "submitted_at": "2026-06-25T09:59:28+00:00"
+    },
+    {
+        "name": "Aobakwe Moerane",
+        "email": "aobakwemoerane@gmail.com",
+        "phone": "74421965",
+        "position": "General Application",
+        "cover": "test",
+        "cv_file": "cv_Aobakwe_Moerane_2026-06-25.pdf",
+        "submitted_at": "2026-06-25T10:21:10+00:00"
     }
 ]

@@ -69,17 +69,46 @@ mobileDropdowns.forEach((dropdown) => {
 
 
 const setActiveLink = () => {
+    const currentPath = window.location.pathname.split('/').pop() || 'index.php';
+    const isHomePage = currentPath === 'index.php' || currentPath === '' || currentPath === 'index.html';
     const fromTop = window.scrollY + 120;
 
     navLinks.forEach((link) => {
         const href = link.getAttribute('href');
-        if (!href || !href.startsWith('#')) return;
+        if (!href) return;
 
-        const section = document.querySelector(href);
-        if (!section) return;
+        let isActive = false;
 
-        const isActive = section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop;
+        if (href.startsWith('#')) {
+            // Anchor link — only activate via scroll-spy, and only on the home page
+            if (isHomePage) {
+                const section = document.querySelector(href);
+                if (section) {
+                    isActive =
+                        section.offsetTop <= fromTop &&
+                        section.offsetTop + section.offsetHeight > fromTop;
+                }
+            }
+        } else {
+            // Real page link — match by filename
+            const linkPage = href.split('/').pop().split('#')[0];
+            if (linkPage) {
+                isActive = linkPage === currentPath;
+            }
+        }
+
         link.classList.toggle('active', isActive);
+
+        // If a dropdown child is active, highlight the parent trigger too
+        if (isActive) {
+            const parentDropdown = link.closest('.nav-dropdown');
+            if (parentDropdown) {
+                const trigger = parentDropdown.querySelector(':scope > a');
+                if (trigger && trigger !== link) {
+                    trigger.classList.add('active');
+                }
+            }
+        }
     });
 
     if (header) {
