@@ -160,6 +160,7 @@ function renderIcon(string $name): string {
                             <li><a href="project-water-utilities-corporation-phase-1.php">Water Utilities Corporation Phase 1</a></li>
                         </ul>
                     </li>
+                    <li><a href="community.php">Community</a></li>
                     <li><a href="careers.php" class="active">Careers</a></li>
                     <li><a href="index.php#contact">Contact</a></li>
                 </ul>

@@ -66,6 +66,7 @@ function e(string $value): string
                             <?php endforeach; ?>
                         </ul>
                     </li>
+                    <li><a href="community.php">Community</a></li>
                     <li><a href="careers.php">Careers</a></li>
                     <li><a href="index.php#contact">Contact</a></li>
                 </ul>

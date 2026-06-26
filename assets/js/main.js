@@ -239,3 +239,163 @@ if (contactForm) {
         }
     });
 }
+
+
+// --- Vertical "popped middle" gallery carousel ---
+function initStoryGallery(container, photos) {
+    const track = container.querySelector('.story-gallery-track');
+    const prevBtn = container.querySelector('.story-gallery-nav.prev');
+    const nextBtn = container.querySelector('.story-gallery-nav.next');
+    let activeIndex = 0;
+
+    const render = () => {
+        track.innerHTML = '';
+        photos.forEach((src, i) => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.className = 'story-gallery-img';
+            img.alt = '';
+            img.draggable = false;
+
+            const distance = i - activeIndex;
+            const absDist = Math.abs(distance);
+            const isActive = distance === 0;
+
+            if (isActive) img.classList.add('is-active');
+
+            const scale = isActive ? 1 : Math.max(0.55, 1 - absDist * 0.16);
+            const translateX = distance * 230; // horizontal spacing
+            const opacity = absDist > 3 ? 0 : 1 - absDist * 0.22;
+
+            img.style.transform = `translate(-50%, -50%) translateX(${translateX}px) scale(${scale})`;
+            img.style.opacity = String(Math.max(opacity, 0));
+            img.style.zIndex = String(100 - absDist);
+
+            img.addEventListener('click', () => {
+                if (i === activeIndex) return;
+                activeIndex = i;
+                render();
+            });
+
+            track.appendChild(img);
+        });
+    };
+
+    const goPrev = () => {
+        activeIndex = (activeIndex - 1 + photos.length) % photos.length;
+        render();
+    };
+    const goNext = () => {
+        activeIndex = (activeIndex + 1) % photos.length;
+        render();
+    };
+
+    prevBtn.addEventListener('click', goPrev);
+    nextBtn.addEventListener('click', goNext);
+
+    // --- Touch / mouse drag scrolling ---
+    let startX = 0;
+    let isDragging = false;
+    let hasMoved = false;
+    const dragThreshold = 40; // px needed to trigger a slide change
+
+    const onDragStart = (clientX) => {
+        startX = clientX;
+        isDragging = true;
+        hasMoved = false;
+        container.classList.add('dragging');
+    };
+
+    const onDragMove = (clientX) => {
+        if (!isDragging) return;
+        const delta = clientX - startX;
+        if (Math.abs(delta) > 10) hasMoved = true;
+    };
+
+    const onDragEnd = (clientX) => {
+        if (!isDragging) return;
+        const delta = clientX - startX;
+        isDragging = false;
+        container.classList.remove('dragging');
+
+        if (Math.abs(delta) > dragThreshold) {
+            if (delta < 0) goNext();
+            else goPrev();
+        }
+    };
+
+    // Touch events (mobile)
+    container.addEventListener('touchstart', (e) => {
+        onDragStart(e.touches[0].clientX);
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+        onDragMove(e.touches[0].clientX);
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+        onDragEnd(e.changedTouches[0].clientX);
+    });
+
+    // Mouse events (desktop drag)
+    container.addEventListener('mousedown', (e) => {
+        onDragStart(e.clientX);
+        e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        onDragMove(e.clientX);
+    });
+
+    window.addEventListener('mouseup', (e) => {
+        onDragEnd(e.clientX);
+    });
+
+    // Prevent the click-to-select-image handler from firing right after a drag
+    track.addEventListener('click', (e) => {
+        if (hasMoved) {
+            e.stopPropagation();
+        }
+    }, true);
+
+    render();
+}
+
+// Inline media gallery (always visible, no modal)
+document.querySelectorAll('.story-gallery-inline').forEach((container) => {
+    const photos = (container.dataset.gallery || '').split(',').filter(Boolean);
+    if (photos.length) initStoryGallery(container, photos);
+});
+
+// Story modal wiring
+const storyModal = document.getElementById('storyModal');
+if (storyModal) {
+    const modalTitle = storyModal.querySelector('.story-modal-title');
+    const modalSummary = storyModal.querySelector('.story-modal-summary');
+    const modalGallery = storyModal.querySelector('.story-gallery');
+    const closeBtn = storyModal.querySelector('.story-modal-close');
+
+    document.querySelectorAll('.focus-mini-card').forEach((card) => {
+        card.addEventListener('click', () => {
+            modalTitle.textContent = card.dataset.storyTitle || '';
+            modalSummary.textContent = card.dataset.storySummary || '';
+            const photos = (card.dataset.storyPhotos || '').split(',').filter(Boolean);
+            initStoryGallery(modalGallery, photos);
+            storyModal.classList.add('open');
+            storyModal.setAttribute('aria-hidden', 'false');
+        });
+    });
+
+    const closeModal = () => {
+        storyModal.classList.remove('open');
+        storyModal.setAttribute('aria-hidden', 'true');
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    storyModal.addEventListener('click', (e) => {
+        if (e.target === storyModal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+}
