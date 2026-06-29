@@ -94,7 +94,7 @@ $projects = [
 ];
 
 $stats = [
-    ['value' => '3300+', 'label' => 'Meters installed'],
+    ['value' => '33,000+', 'label' => 'Meters installed'],
     ['value' => '10+', 'label' => 'Years experience'],
     ['value' => '80+', 'label' => 'Team members'],
     ['value' => '4', 'label' => 'Botswana branches'],
@@ -102,27 +102,30 @@ $stats = [
 
 $aboutHighlights = [
     [
-        'title' => 'Industry Recognition',
-        'summary' => 'Recognised for delivering dependable infrastructure and technology solutions for water management environments.',
+        'title' => 'Award-Winning',
+        'summary' => '1st place at the 2025 Botswana Consumer Fair (Manufacturing Sector). Endorsed by Brand Botswana and a proud SWAN member.',
         'icon' => 'award',
     ],
     [
         'title' => '100% Citizen Owned',
-        'summary' => 'Leeroy Systems is a 100% citizen-owned, registered and compliant company operating in Gaborone.',
+        'summary' => 'Everything built locally — CIU assembly, software, network management and calibration, all done in Botswana, for Botswana.',
         'icon' => 'flag',
     ],
     [
         'title' => '4 Network Branches in Botswana',
-        'summary' => 'Branches in Gaborone, Jwaneng, Palapye and Francistown support clients across the country.',
+        'summary' => 'Branches in Gaborone, Jwaneng, Palapye and Francistown support clients across government, mining, councils and commercial sectors.',
         'icon' => 'map',
     ],
 ];
 
 $values = [
-    ['title' => 'Quality', 'summary' => 'Reliable products, careful installation and dependable support.', 'icon' => 'check'],
-    ['title' => 'Integrity', 'summary' => 'Transparent, honest and accountable client relationships.', 'icon' => 'shield'],
-    ['title' => 'Innovation', 'summary' => 'Modern metering technology for practical water intelligence.', 'icon' => 'lightbulb'],
-    ['title' => 'Customer Focus', 'summary' => 'Responsive service built around real operational needs.', 'icon' => 'users'],
+    ['title' => 'Quality', 'summary' => 'Committed to the highest quality products and service in every deployment.', 'icon' => 'check'],
+    ['title' => 'Integrity', 'summary' => 'Transparency, honesty and accountability in all client dealings.', 'icon' => 'shield'],
+    ['title' => 'Innovation', 'summary' => 'Embracing cutting-edge technology to stay ahead of the industry.', 'icon' => 'lightbulb'],
+    ['title' => 'Customer Satisfaction', 'summary' => 'Going the extra mile to meet and exceed client expectations.', 'icon' => 'users'],
+    ['title' => 'Team Work', 'summary' => 'Winning by supporting each other and working as one connected team.', 'icon' => 'network'],
+    ['title' => 'Sustainability', 'summary' => 'Building a better future through quality, passion, integrity and trust.', 'icon' => 'eye'],
+    ['title' => 'Reliability & Accuracy', 'summary' => 'Consistently delivering on every promise we make to our clients.', 'icon' => 'gauge'],
 ];
 
 $partnerLogos = [
@@ -412,8 +415,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="about-copy">
                     <p class="eyebrow">About us</p>
-                    <h2>Trusted MaaS partner in Botswana.</h2>
-                    <p>We are a trusted partner for metering-as-a-service (MaaS). The Leeroy Systems turnkey smart water metering solution is designed for utility companies, Government, Parastatals, Businesses and Private individuals for water monitoring, bill management, real-time revenue collection and water loss management.</p>
+                    <h2>Botswana's leading smart prepaid metering partner.</h2>
+                    <p>Leeroy Systems is a 100% citizen-owned company based in Gaborone, Botswana — the country's leading smart prepaid water metering and IoT solutions provider. Everything is built locally: CIU assembly, software, network management, and calibration, all done in Botswana, for Botswana. With contracts across government, mining, councils and commercial sectors, Leeroy Systems is the trusted Metering-as-a-Service (MaaS) partner of choice.</p>
                 </div>
                 <div class="about-highlights">
                     <?php foreach ($aboutHighlights as $highlight): ?>
@@ -432,7 +435,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mission-intro reveal">
                     <p class="eyebrow">Direction</p>
                     <h2>Clear purpose, measurable water impact.</h2>
-                    <p>These two statements should feel like the strategic spine of the company, so they now sit in a more premium feature band instead of ordinary cards.</p>
+                    <p>Our vision and mission define every system we build and every client relationship we invest in.</p>
                 </div>
                 <div class="mission-grid">
                     <article class="reveal">
@@ -447,7 +450,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <span class="feature-icon"><?php echo renderIcon('target'); ?></span>
                             <h3>Mission</h3>
                         </div>
-                        <p>To deliver quality water usage data and real-time pre-payable water metering solutions that exceed industry standards. We strive to provide unparalleled service through expertise, innovation and reliability, ensuring the longevity and performance of every system we install.</p>
+                        <p>To deliver quality water usage data and real-time prepaid water metering solutions that exceed industry standards — combining expertise, innovation, and reliability to ensure every system performs and lasts.</p>
                     </article>
                 </div>
             </div>
@@ -456,7 +459,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="values-copy">
                     <p class="eyebrow">Our values</p>
                     <h2>The standards behind every system we install.</h2>
-                    <p>Instead of flat cards, these values now work like a compact operating code: direct, visual, and easier to scan.</p>
+                    <p>Seven principles that guide how we design, build and support every system we deploy.</p>
                 </div>
                 <div class="values-grid">
                     <?php foreach ($values as $index => $value): ?>

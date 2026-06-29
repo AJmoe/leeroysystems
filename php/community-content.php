@@ -1,10 +1,10 @@
 <?php
 
 $impactStats = [
-    ['value' => '2', 'label' => 'Marathons participated'],
-    ['value' => '1', 'label' => 'Orphanage painted'],
-    ['value' => '4', 'label' => 'Community events'],
-    ['value' => '80+', 'label' => 'Staff involved'],
+    ['value' => '20+', 'label' => 'Schools sponsored'],
+    ['value' => '8+', 'label' => 'Communities supported'],
+    ['value' => '200+', 'label' => 'Youths employed'],
+    ['value' => '20+', 'label' => 'Training programmes run'],
 ];
 
 $outreach = [
