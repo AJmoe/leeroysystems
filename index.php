@@ -42,10 +42,10 @@ $services = [
         'image' => 'assets/img/network_tower.jpg',
     ],
     [
-        'title' => 'Sales as a Service',
-        'summary' => 'Professional sales and customer acquisition support designed to drive growth and adoption.',
+        'title' => 'Software as a Service',
+        'summary' => 'Digital tools and connected support designed to streamline metering workflows and adoption.',
         'icon' => 'trend',
-        'url' => 'service-sales-as-a-service.php',
+        'url' => 'service-software-as-a-service.php',
         'image' => 'assets/img/SAAS.png',
     ],
 ];
@@ -825,6 +825,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a href="#contact">Help &amp; Faqs</a>
                 <a href="#services">Services</a>
                 <a href="#contact">Contact</a>
+
+                <div class="footer-flag">
+                    <img src="assets/img/botColor.png" alt="Botswana flag">
+               </div>
+
             </div>
             <div>
                 <h2>Contact Us</h2>

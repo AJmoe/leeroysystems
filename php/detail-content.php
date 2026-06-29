@@ -45,20 +45,20 @@ $servicePages = [
         ],
         'outcome' => 'A more stable smart metering network with better visibility across connected assets.',
     ],
-    'sales-as-a-service' => [
-        'title' => 'Sales as a Service',
+    'software-as-a-service' => [
+        'title' => 'Software as a Service',
         'eyebrow' => 'Service',
-        'summary' => 'Professional sales, customer acquisition and adoption support for metering solutions.',
+        'summary' => 'Software delivery, customer workflows and digital support tools for metering operations.',
         'hero' => 'assets/img/saas1.png',
-        'url' => 'service-sales-as-a-service.php',
-        'intro' => 'Beyond installation, clients often need structured customer engagement. This service supports education, onboarding and adoption so water users understand the value of smart prepaid metering.',
+        'url' => 'service-software-as-a-service.php',
+        'intro' => 'Beyond installation, clients often need digital tools that support workflows, onboarding and adoption. This service helps water users and administrators work with smart prepaid metering in a clearer, more connected way.',
         'points' => [
-            'Customer onboarding and product explanation support.',
-            'Sales process support for councils, estates and private clients.',
-            'Market engagement for prepaid water metering adoption.',
-            'Customer feedback collection for service improvement.',
+            'Digital onboarding and workflow support for metering users.',
+            'Software tools that improve customer and admin experience.',
+            'Support for adoption, reporting and connected service delivery.',
+            'Feedback loops to improve the platform and user journey.',
         ],
-        'outcome' => 'Better adoption, clearer communication and stronger customer confidence in the metering programme.',
+        'outcome' => 'Better adoption, clearer communication and stronger confidence in the digital service experience.',
     ],
 ];
 
