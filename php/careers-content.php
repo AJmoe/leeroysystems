@@ -22,6 +22,12 @@ $whyUs = [
     ],
 ];
 
+$footerAffiliations = [
+    ['name' => 'Business Botswana', 'logo' => 'assets/img/partners/SWAN.png'],
+    ['name' => 'Brand Botswana',  'logo' => 'assets/img/partners/BRAND BOTSWANA.png'],
+    ['name' => 'LEA',             'logo' => 'assets/img/partners/RSDC.png'],
+];
+
 $openings = [];
 
 $formStatus = null;
@@ -110,6 +116,11 @@ function renderIcon(string $name): string {
         'briefcase'   => '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/><line x1="12" y1="12" x2="12" y2="12"/>',
         'check'       => '<path d="m20 6-11 11-5-5"/>',
         'pin'         => '<path d="M12 21s7-5.1 7-11a7 7 0 1 0-14 0c0 5.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/>',
+        'facebook' => '<path d="M15 8h-2a2 2 0 0 0-2 2v2H8v3h3v6h3v-6h3l1-3h-4v-2a1 1 0 0 1 1-1h3V6h-3Z"/>',
+        'twitter' => '<path d="M22 5.8c-.7.3-1.5.5-2.3.6.8-.5 1.4-1.2 1.7-2.1-.8.5-1.6.8-2.5 1A4 4 0 0 0 12 8v.9A11.3 11.3 0 0 1 3.8 4.7a4 4 0 0 0 1.2 5.4c-.6 0-1.2-.2-1.8-.5v.1a4 4 0 0 0 3.2 3.9c-.5.1-1.1.2-1.7.1a4 4 0 0 0 3.7 2.8A8 8 0 0 1 2 18.2 11.3 11.3 0 0 0 8.1 20c7.3 0 11.4-6.1 11.4-11.4v-.5c.8-.6 1.5-1.3 2.1-2.1Z"/>',
+        'linkedin' => '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V9h4v2"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
+        'youtube' => '<path d="M22 12s0-3.3-.4-4.8a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5a3 3 0 0 0-2.1 2.1C2 8.7 2 12 2 12s0 3.3.4 4.8a3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1c.4-1.5.4-4.8.4-4.8Z"/><path d="m10 15 5-3-5-3v6Z"/>',
+        
     ];
     $paths = $icons[$name] ?? $icons['check'];
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . $paths . '</svg>';
@@ -357,10 +368,65 @@ function renderIcon(string $name): string {
     </main>
 
    
-    <footer class="site-footer detail-footer">
+    <footer class="site-footer">
+        <div class="container footer-grid">
+             <div class="footer-about">
+                <img src="assets/img/leeroy-systems.jpg" alt="Leeroy Systems" class="footer-logo">
+                <h2>About Us</h2>
+                <p>Smart prepaid water metering solutions for efficient, accountable and secure water management.</p>
+                <div class="footer-social" aria-label="Follow us">
+                    <a href="https://facebook.com/p/Leeroy-Systems-100063566140015" aria-label="Facebook"><?php echo renderIcon('facebook'); ?></a>
+                    <a href="https://twitter.com/leeroysystems" aria-label="Twitter"><?php echo renderIcon('twitter'); ?></a>
+                    <a href="https://bw.linkedin.com/in/leeroy-systems-415a142b6" aria-label="LinkedIn"><?php echo renderIcon('linkedin'); ?></a>
+                    <a href="https://www.youtube.com/@LeeroySystems" aria-label="YouTube"><?php echo renderIcon('youtube'); ?></a>
+                </div>
+            </div>
+            <div>
+                <h2>Services</h2>
+                <a href="#about">About Us</a>
+                <a href="#contact">Help &amp; Faqs</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+
+                <div class="footer-flag">
+                    <img src="assets/img/botColor.png" alt="Botswana flag">
+               </div>
+
+            </div>
+            <div>
+                <h2>Contact Us</h2>
+                <div class="footer-contact-list">
+                    <p class="footer-contact-item">
+                        <span class="footer-contact-icon"><?php echo renderIcon('pin'); ?></span>
+                        <span>Plot 176, Gaborone International Commerce Park.<br>Gaborone, Botswana</span>
+                    </p>
+                    <p class="footer-contact-item">
+                        <span class="footer-contact-icon"><?php echo renderIcon('mail'); ?></span>
+                        <a href="mailto:info@leeroysystems.co.bw">info@leeroysystems.co.bw</a>
+                    </p>
+                    <p class="footer-contact-item">
+                        <span class="footer-contact-icon"><?php echo renderIcon('phone'); ?></span>
+                        <a href="tel:+2673932519">(+267) 393 2519</a>
+                    </p>
+                </div>
+            </div>
+            <div>
+               <div>
+                    <h2>Affiliations</h2>
+                    <div class="footer-affiliations">
+                        <?php foreach ($footerAffiliations as $aff): ?>
+                            <span>
+                                <img src="<?php echo htmlspecialchars($aff['logo']); ?>"
+                                    alt="<?php echo htmlspecialchars($aff['name']); ?>">
+                            </span>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container footer-bottom">
             <p>&copy; <?php echo date('Y'); ?> | Hitong Holdings (Pty) Ltd T/A Leeroy Systems</p>
-            <p><a href="index.php">Back to Home</a></p>
+            <p>Smart Prepaid Metering Solutions</p>
         </div>
     </footer>
 

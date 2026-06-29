@@ -4216,18 +4216,13 @@ h3 {
     }
 }
 
-/* Nav buttons must always sit above every image, regardless of that image's own z-index */
-.story-gallery-nav {
-    z-index: 999;   /* was 6 — now guaranteed above any .story-gallery-img (max z-index 100) */
-     background: rgba(34, 50, 88, 0.85);
-    border: 1.5px solid rgba(255, 255, 255, 0.3);
-}
-
 .story-modal-close {
-    position: absolute; top: 14px; right: 14px; z-index: 5;
+    position: absolute; top: 14px; right: 14px; z-index: 120;
     width: 38px; height: 38px; border-radius: 999px; border: 0;
-    background: rgba(34,50,88,.08); color: var(--navy);
+    background: var(--white); color: var(--navy);
     font-size: 1.4rem; line-height: 1; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    flex-shrink: 0;
 }
 .story-modal-close:hover { background: var(--navy); color: var(--white); }
 
@@ -4245,8 +4240,8 @@ h3 {
 .story-gallery {
     position: relative;
     height: 520px;
-    background: var(--card-bg);
-    border: 1px solid rgba(34,50,88,0.06);
+    background: linear-gradient(135deg, #0d1626 0%, #1b2c50 100%);
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4290,7 +4285,7 @@ h3 {
 
 .story-gallery-nav {
     position: absolute;
-    z-index: 6;
+    z-index: 110;
     width: 50px; height: 50px;
     border-radius: 999px;
     border: 1.5px solid rgba(255, 255, 255, 0.55);
@@ -4376,9 +4371,8 @@ h3 {
     gap: 10px;
     overflow-x: auto;
     padding: 14px;
-    background: var(--card-bg);
-    border: 1px solid rgba(34,50,88,0.06);
-    border-top: 0;
+    background: #0d1626;
+    border: none;
     border-radius: 0 0 16px 16px;
     scroll-snap-type: x mandatory;
 }

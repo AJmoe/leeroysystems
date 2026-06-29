@@ -346,46 +346,57 @@ function initStoryGallery(container, photos) {
         scrollStrip.appendChild(thumb);
     });
 
-    const render = () => {
-        track.innerHTML = '';
-        photos.forEach((src, i) => {
-            const img = document.createElement('img');
-            img.src = src;
-            img.className = 'story-gallery-img';
-            const name = src.split('/').pop().replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
-            img.alt = name;
-            img.draggable = false;
+    // Create all images once so CSS transitions can animate between states
+    track.innerHTML = '';
+    const imgElements = photos.map((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'story-gallery-img';
+        const name = src.split('/').pop().replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+        img.alt = name;
+        img.draggable = false;
+        img.addEventListener('click', () => {
+            if (i === activeIndex) return;
+            activeIndex = i;
+            render();
+        });
+        track.appendChild(img);
+        return img;
+    });
 
-            const distance = i - activeIndex;
+    const positionImages = () => {
+        const n = imgElements.length;
+        imgElements.forEach((img, i) => {
+            // Circular distance so every image always has neighbours on both sides
+            const raw = ((i - activeIndex) % n + n) % n;
+            const distance = raw > n / 2 ? raw - n : raw;
             const absDist = Math.abs(distance);
             const isActive = distance === 0;
 
-            if (isActive) img.classList.add('is-active');
+            img.classList.toggle('is-active', isActive);
 
             const scale = isActive ? 1 : Math.max(0.55, 1 - absDist * 0.16);
-            const translateX = distance * 230;
+            const translateX = distance * 240;
             const opacity = absDist > 3 ? 0 : 1 - absDist * 0.22;
 
             img.style.transform = `translate(-50%, -50%) translateX(${translateX}px) scale(${scale})`;
             img.style.opacity = String(Math.max(opacity, 0));
             img.style.zIndex = String(100 - absDist);
-
-            img.addEventListener('click', () => {
-                if (i === activeIndex) return;
-                activeIndex = i;
-                render();
-            });
-
-            track.appendChild(img);
         });
+    };
 
-        // Sync thumbnail highlight + scroll it into view
+    const syncThumbs = () => {
         const thumbs = scrollStrip.querySelectorAll('.story-gallery-thumb');
         thumbs.forEach((t, i) => t.classList.toggle('is-active', i === activeIndex));
         const activeThumb = thumbs[activeIndex];
         if (activeThumb) {
             activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         }
+    };
+
+    const render = () => {
+        positionImages();
+        syncThumbs();
     };
 
     const goPrev = () => {
@@ -404,7 +415,7 @@ function initStoryGallery(container, photos) {
     let startX = 0;
     let isDragging = false;
     let hasMoved = false;
-    const dragThreshold = 40; // px needed to trigger a slide change
+    const dragThreshold = 40;
 
     const onDragStart = (clientX) => {
         startX = clientX;
@@ -431,7 +442,6 @@ function initStoryGallery(container, photos) {
         }
     };
 
-    // Touch events (mobile)
     container.addEventListener('touchstart', (e) => {
         onDragStart(e.touches[0].clientX);
     }, { passive: true });
@@ -444,7 +454,6 @@ function initStoryGallery(container, photos) {
         onDragEnd(e.changedTouches[0].clientX);
     });
 
-    // Mouse events (desktop drag)
     container.addEventListener('mousedown', (e) => {
         onDragStart(e.clientX);
         e.preventDefault();
@@ -458,14 +467,19 @@ function initStoryGallery(container, photos) {
         onDragEnd(e.clientX);
     });
 
-    // Prevent the click-to-select-image handler from firing right after a drag
     track.addEventListener('click', (e) => {
         if (hasMoved) {
             e.stopPropagation();
         }
     }, true);
 
-    render();
+    // Set initial positions without transitions to avoid a flash on first paint
+    imgElements.forEach(img => { img.style.transition = 'none'; });
+    positionImages();
+    syncThumbs();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        imgElements.forEach(img => { img.style.transition = ''; });
+    }));
 }
 
 // Inline media gallery (always visible, no modal)
