@@ -9,49 +9,96 @@ $impactStats = [
 
 $outreach = [
     [
-        'title' => 'Gaborone Marathon',
+        'title' => 'Diacore Gaborone Marathon',
         'summary' => 'Leeroy Systems took part in the Gaborone Marathon, representing the company and showing commitment to an active and connected community.',
-        'image' => 'assets/img/ab-us1.jpg',
+        'image' => 'assets/img/gbmarathon_0.jpg',
         'category' => 'Outreach',
+        'photos' => [
+            'assets/img/gbmarathon_0.jpg',
+            'assets/img/gbmarathon_00.jpg',
+            'assets/img/gbmarathon_1.jpg',
+            'assets/img/gbmarathon_2.jpg',
+            'assets/img/gbmarathon_3.jpg',
+            'assets/img/gbmarathon_4.jpg',
+            'assets/img/gbmarathon_5.jpg',
+            'assets/img/gbmarathon_6.jpg',
+        ],
     ],
     [
-        'title' => 'Francistown Marathon',
-        'summary' => 'Our northern branch team participated in the Francistown Marathon, bringing the Leeroy spirit to the second city.',
-        'image' => 'assets/img/ft_car.jpeg',
+        'title' => 'Francistown Mayor’s Marathon',
+        'summary' => 'Our northern branch team participated in the Mayor ofFrancistown Marathon, bringing the Leeroy spirit to the second city.',
+        'image' => 'assets/img/ftmarathon_0.jpg',
         'category' => 'Outreach',
+        'photos' => [
+            'assets/img/ftmarathon_0.jpg',
+            'assets/img/ftmarathon_00.jpg',
+            'assets/img/ftmarathon_1.jpg',
+            'assets/img/ftmarathon_2.jpg',
+            'assets/img/ftmarathon_3.jpg',
+            'assets/img/ftmarathon_4.jpg',
+            'assets/img/ftmarathon_5.jpg',
+        ],
     ],
     [
-        'title' => 'Orphanage Painting',
+        'title' => 'SOS Painting Outreach',
         'summary' => 'Staff volunteered their time and effort to repaint a local orphanage, giving back to the community in a hands-on and meaningful way.',
-        'image' => 'assets/img/about.jpg',
+        'image' => 'assets/img/orphanage_0.jpg',
         'category' => 'Outreach',
+        'photos' => [
+            'assets/img/orphanage_00.jpg',
+            'assets/img/orphanage_0.jpg',
+            'assets/img/orphanage_1.jpg',
+            'assets/img/orphanage_2.jpg',
+            'assets/img/orphanage_3.jpg',
+            'assets/img/orphanage_4.jpg',
+            'assets/img/orphanage_5.jpg',
+        ],
     ],
-    [
-        'title' => 'Community Aerobics Morning',
-        'summary' => 'Leeroy Systems hosted a community exercise morning, bringing people together for an energetic aerobics session to promote health and wellness.',
-        'image' => 'assets/img/pearlleeroy.jpg',
-        'category' => 'Outreach',
-    ],
+   
 ];
 
 $inhouse = [
     [
         'title' => 'Christmas Party',
         'summary' => 'An annual celebration bringing the entire Leeroy Systems team together to reflect on the year, recognise achievements and enjoy the festive season.',
-        'image' => 'assets/img/ab-us.jpg',
+        'image' => 'assets/img/christmaspart2025_0.jpg',
         'icon' => 'star',
+        'photos' => [
+            'assets/img/christmaspart2025_0.jpg',
+            'assets/img/christmaspart2025_01.jpg',
+            'assets/img/christmaspart2025_2.jpg',
+            'assets/img/christmaspart2025_3.jpg',
+            'assets/img/christmaspart2025_4.jpg',
+            'assets/img/christmaspart2025_1.jpg',
+        ],
     ],
     [
         'title' => 'Spring Day',
         'summary' => 'A team outdoor day celebrating the season, giving staff a chance to relax, connect and recharge together outside the office.',
-        'image' => 'assets/img/abu.jpg',
+        'image' => 'assets/img/spr0.jpg',
         'icon' => 'sun',
+        'photos' => [
+            'assets/img/spr0.jpg',
+            'assets/img/spr3.jpg',
+            'assets/img/spr4.jpg',
+            'assets/img/spr5.jpg',
+            'assets/img/spr6.jpg',
+            'assets/img/spr1.jpg',
+        ],
     ],
     [
         'title' => 'Morning Aerobics',
         'summary' => 'Staff start select mornings with a group aerobics session, promoting physical wellness, team energy and a healthy work culture.',
-        'image' => 'assets/img/about-operations.jpg',
+        'image' => 'assets/img/mornaerobics_0.jpg',
         'icon' => 'activity',
+        'photos' => [
+            'assets/img/mornaerobics_0.jpg',
+            'assets/img/mornaerobics_1.jpg',
+            'assets/img/mornaerobics_2.jpg',
+            'assets/img/mornaerobics_3.jpg',
+            'assets/img/mornaerobics_4.jpg',
+            'assets/img/mornaerobics_5.jpg',
+        ],
     ],
 ];
 
@@ -65,14 +112,18 @@ $footerAffiliations = [
 
 
 $gallery = [
-    'assets/img/ab-us1.jpg',
-    'assets/img/pearlleeroy.jpg',
-    'assets/img/ab-us.jpg',
-    'assets/img/abu.jpg',
-    'assets/img/about.jpg',
-    'assets/img/about-operations.jpg',
-    'assets/img/leeroy_car.jpg',
-    'assets/img/ft_car.jpeg',
+    'assets/img/christmaspart2025_0.jpg',
+    'assets/img/christmaspart2025_2.jpg',
+    'assets/img/spr0.jpg',
+    'assets/img/spr4.jpg',
+    'assets/img/mornaerobics_0.jpg',
+    'assets/img/mornaerobics_2.jpg',
+    'assets/img/gbmarathon_0.jpg',
+    'assets/img/gbmarathon_2.jpg',
+    'assets/img/ftmarathon_0.jpg',
+    'assets/img/ftmarathon_2.jpg',
+    'assets/img/orphanage_0.jpg',
+    'assets/img/orphanage_2.jpg',
 ];
 
 
@@ -81,13 +132,13 @@ $focusAreas = [
         'key' => 'inhouse',
         'title' => 'Life at Leeroy',
         'tagline' => 'The culture, the people, the moments that make us who we are.',
-        'image' => 'assets/img/ab-us.jpg',
-        'items' => array_map(function ($item) use ($gallery) {
+        'image' => 'assets/img/christmaspart2025_0.jpg',
+        'items' => array_map(function ($item) {
             return [
-                'title' => $item['title'],
-                'image' => $item['image'],
+                'title'   => $item['title'],
+                'image'   => $item['image'],
                 'summary' => $item['summary'],
-                'photos' => array_slice($gallery, 0, 6),
+                'photos'  => $item['photos'],
             ];
         }, $inhouse),
     ],
@@ -95,13 +146,13 @@ $focusAreas = [
         'key' => 'outreach',
         'title' => 'Beyond the Office',
         'tagline' => 'How we show up for the communities we serve, off the clock.',
-        'image' => 'assets/img/ab-us1.jpg',
-        'items' => array_map(function ($item) use ($gallery) {
+        'image' => 'assets/img/gbmarathon_0.jpg',
+        'items' => array_map(function ($item) {
             return [
-                'title' => $item['title'],
-                'image' => $item['image'],
+                'title'   => $item['title'],
+                'image'   => $item['image'],
                 'summary' => $item['summary'],
-                'photos' => array_slice($gallery, 2, 6),
+                'photos'  => $item['photos'],
             ];
         }, $outreach),
     ],
