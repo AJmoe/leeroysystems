@@ -383,7 +383,7 @@ function renderIcon(string $name): string {
                 <p>Smart prepaid water metering solutions for efficient, accountable and secure water management.</p>
                 <div class="footer-social" aria-label="Follow us">
                     <a href="https://facebook.com/p/Leeroy-Systems-100063566140015" aria-label="Facebook"><?php echo renderIcon('facebook'); ?></a>
-                    <a href="https://twitter.com/leeroysystems" aria-label="Twitter"><?php echo renderIcon('twitter'); ?></a>
+                    
                     <a href="https://bw.linkedin.com/in/leeroy-systems-415a142b6" aria-label="LinkedIn"><?php echo renderIcon('linkedin'); ?></a>
                     <a href="https://www.youtube.com/@LeeroySystems" aria-label="YouTube"><?php echo renderIcon('youtube'); ?></a>
                 </div>

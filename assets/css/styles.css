@@ -1083,7 +1083,7 @@ h3 {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    animation: partnerScroll 22s linear infinite;
+    animation: partnerScroll 66s linear infinite;
     will-change: transform;
 }
 
@@ -1093,7 +1093,7 @@ h3 {
 
 @keyframes partnerScroll {
     from { transform: translateX(0); }
-    to   { transform: translateX(-33.333%); }
+    to   { transform: translateX(-100%); }
 }
 .partner-logo-item {
     display: flex;

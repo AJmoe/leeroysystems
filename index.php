@@ -2,7 +2,7 @@
 
 $heroSlides = [
     [
-        'image' => 'assets/img/saas1.png',
+        'image' => 'assets/img/saas.png',
         'url' => '#services',
         'eyebrow' => '',
         'title' => '',
@@ -46,7 +46,7 @@ $services = [
         'summary' => 'Digital tools and connected support designed to streamline metering workflows and adoption.',
         'icon' => 'trend',
         'url' => 'service-software-as-a-service.php',
-        'image' => 'assets/img/SAAS.png',
+        'image' => 'assets/img/saas2.png',
     ],
 ];
 
@@ -192,6 +192,17 @@ $partnerLogo = [
         'logo' => 'assets/img/partners/WIRELESS 360.png',
         'url'  => 'https://io.wi360.net/'
     ],
+    [
+        'name' => 'HoneyWell',
+        'logo' => 'assets/img/partners/Honeywell.png',
+        'url'  => 'https://automation.honeywell.com/gb/en/products/smart-energy/water'
+    ],
+    [
+        'name' => 'SH METERS',
+        'logo' => 'assets/img/partners/SH-meters.png',
+        'url'  => 'https://www.sh-meters.com/'
+    ],
+
 ];
 
 $aboutSlides = [
@@ -817,7 +828,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>Smart prepaid water metering solutions for efficient, accountable and secure water management.</p>
                 <div class="footer-social" aria-label="Follow us">
                     <a href="https://facebook.com/p/Leeroy-Systems-100063566140015" aria-label="Facebook"><?php echo renderIcon('facebook'); ?></a>
-                    <a href="https://twitter.com/leeroysystems" aria-label="Twitter"><?php echo renderIcon('twitter'); ?></a>
+                    
                     <a href="https://bw.linkedin.com/in/leeroy-systems-415a142b6" aria-label="LinkedIn"><?php echo renderIcon('linkedin'); ?></a>
                     <a href="https://www.youtube.com/@LeeroySystems" aria-label="YouTube"><?php echo renderIcon('youtube'); ?></a>
                 </div>
