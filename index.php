@@ -78,7 +78,7 @@ $projects = [
         'images' => [
             'assets/img/jwaneng-board-.jpg',
             'assets/img/leeroy_car.jpg',
-            'assets/img/about-data-portal.jpg',
+            'assets/img/jwa1.jpg',
         ],
     ],
     [
