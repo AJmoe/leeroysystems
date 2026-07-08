@@ -2502,9 +2502,9 @@ h3 {
 }
 
 .form-alert.success {
-    background: rgba(34, 150, 90, 0.10);
-    border: 1px solid rgba(34, 150, 90, 0.35);
-    color: #1a7a42;
+    background: #16a34a;
+    border: 1px solid #15803d;
+    color: #ffffff;
 }
 
 .form-alert.error {
@@ -2550,7 +2550,7 @@ h3 {
 
 .cs-card {
     position: relative;
-    height: 440px;
+    height: 13cm;
     border-radius: 18px;
     overflow: hidden;
     cursor: pointer;
@@ -2603,7 +2603,7 @@ h3 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 22px;
+    padding: 16px 18px;
 }
 
 .cs-card-top {
@@ -2625,10 +2625,10 @@ h3 {
 
 .cs-card-pin {
     position: absolute;
-    top: 18px;
-    right: 18px;
-    width: 40px;
-    height: 40px;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
     background: rgba(255, 255, 255, 0.14);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.28);
@@ -2661,26 +2661,26 @@ h3 {
 
 .cs-card-city {
     font-family: "Poppins", sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: var(--white);
     line-height: 1;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .cs-card-country {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.50);
     text-transform: uppercase;
     letter-spacing: 0.10em;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .cs-card-details {
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 6px;
     transform: translateY(10px);
     opacity: 0;
     transition: transform 280ms ease, opacity 280ms ease;
@@ -2734,13 +2734,15 @@ h3 {
 }
 
 .form-alert.success {
-    background: rgba(34, 50, 88, 0.1);
-    color: var(--navy);
+    background: #16a34a;
+    border: 1px solid #15803d;
+    color: #ffffff;
 }
 
 .form-alert.error {
-    background: rgba(147, 152, 154, 0.12);
-    color: var(--muted);
+    background: rgba(200, 40, 40, 0.08);
+    border: 1px solid rgba(200, 40, 40, 0.30);
+    color: #b91c1c;
 }
 
 .site-footer {
@@ -4407,4 +4409,130 @@ h3 {
 /* Modal version of the strip can sit directly under the modal gallery */
 .story-modal-content {
     grid-template-rows: auto;
+}
+
+/* ── Chatbot damage section ────────────────────────────────────── */
+.bot-damage-label {
+    color: #b45309;
+}
+
+.bot-chip-alert {
+    border-color: rgba(180, 83, 9, 0.35) !important;
+    color: #92400e !important;
+    background: rgba(251, 191, 36, 0.10) !important;
+}
+.bot-chip-alert:hover {
+    background: rgba(251, 191, 36, 0.22) !important;
+    border-color: rgba(180, 83, 9, 0.55) !important;
+}
+
+.bot-answer-cta {
+    padding: 0 16px 12px;
+}
+.bot-cta-link {
+    display: block;
+    text-align: center;
+    background: var(--navy);
+    color: #fff !important;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: opacity 160ms ease;
+}
+.bot-cta-link:hover { opacity: 0.85; }
+
+/* ── Contact form tabs ─────────────────────────────────────────── */
+.cs-form-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid rgba(34,50,88,0.12);
+    margin-bottom: 1.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+.cs-form-tabs::-webkit-scrollbar { display: none; }
+
+.cs-form-tab {
+    flex: 1;
+    min-width: max-content;
+    padding: 0.7rem 1.1rem;
+    background: none;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+    transition: color 180ms ease, border-color 180ms ease;
+    white-space: nowrap;
+    text-align: center;
+}
+.cs-form-tab:hover { color: var(--navy); }
+.cs-form-tab.active {
+    color: var(--navy);
+    border-bottom-color: var(--navy);
+}
+
+.cs-form-panel { display: none; }
+.cs-form-panel.active { display: block; }
+
+/* Contact preference radio toggle */
+.cs-contact-pref {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+.cs-pref-option {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--navy);
+    user-select: none;
+}
+.cs-pref-option input[type="radio"] {
+    accent-color: var(--navy);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Select inside cs-input-icon */
+.cs-input-select { position: relative; }
+.cs-input-select select {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    font: inherit;
+    color: var(--navy);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 1.5rem;
+}
+.cs-input-select::after {
+    content: '';
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--navy);
+    border-bottom: none;
+    pointer-events: none;
+}
+
+/* Optional label suffix */
+.cs-optional {
+    font-weight: 400;
+    opacity: 0.55;
+    font-size: 0.8em;
 }

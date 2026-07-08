@@ -1,1 +1,42 @@
-﻿[]
+[
+    {
+        "form_type": "forme",
+        "name": "Aobakwe Moerane",
+        "submitted_at": "2026-07-08T09:59:10+00:00",
+        "contact_pref": "email",
+        "contact": "aobakwemoerane@gmail.com",
+        "plot_number": "4257812",
+        "meter_number": "125489752",
+        "query": "testing"
+    },
+    {
+        "form_type": "forme",
+        "name": "Aobakwe Moerane",
+        "submitted_at": "2026-07-08T13:33:06+00:00",
+        "contact_pref": "email",
+        "contact": "aobakwemoerane@gmail.com",
+        "plot_number": "4257812",
+        "meter_number": "125489752",
+        "query": "testing"
+    },
+    {
+        "form_type": "forme",
+        "name": "Aobakwe Moerane",
+        "submitted_at": "2026-07-08T13:33:18+00:00",
+        "contact_pref": "email",
+        "contact": "aobakwemoerane@gmail.com",
+        "plot_number": "4257812",
+        "meter_number": "125489752",
+        "query": "testing"
+    },
+    {
+        "form_type": "forme",
+        "name": "Aobakwe Moerane",
+        "submitted_at": "2026-07-08T13:33:24+00:00",
+        "contact_pref": "email",
+        "contact": "aobakwemoerane@gmail.com",
+        "plot_number": "4257812",
+        "meter_number": "125489752",
+        "query": "testing"
+    }
+]

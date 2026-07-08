@@ -139,7 +139,7 @@ $partnerLogos = [
 $footerAffiliations = [
     ['name' => 'Business Botswana', 'logo' => 'assets/img/partners/SWAN.png'],
     ['name' => 'Brand Botswana',  'logo' => 'assets/img/partners/BRAND BOTSWANA.png'],
-    ['name' => 'LEA',             'logo' => 'assets/img/partners/RSDC.png'],
+    ['name' => 'LEA',             'logo' => 'assets/img/partners/LEA.png'],
 ];
 $partnerLogo = [
     [
@@ -261,49 +261,88 @@ function partnerInitials(string $name): string
 
 $formStatus = null;
 $formErrors = [];
+$activeTab = 'forme';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $organisation = trim($_POST['organisation'] ?? '');
-    $message = trim($_POST['message'] ?? '');
+    $formType  = in_array($_POST['form_type'] ?? '', ['forme', 'business', 'sponsorship'])
+                 ? $_POST['form_type'] : 'forme';
+    $activeTab = $formType;
+    $name      = trim($_POST['name'] ?? '');
 
-    if ($name === '') {
-        $formErrors[] = 'Please enter your name.';
-    }
+    if ($name === '') $formErrors[] = 'Please enter your name.';
 
-    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $formErrors[] = 'Please enter a valid email address.';
-    }
+    $entry = ['form_type' => $formType, 'name' => $name, 'submitted_at' => date('c')];
 
-    if ($message === '') {
-        $formErrors[] = 'Please tell us what you need help with.';
+    if ($formType === 'forme') {
+        $contactPref  = $_POST['contact_pref'] ?? 'email';
+        $contactEmail = trim($_POST['contact_email'] ?? '');
+        $contactPhone = trim($_POST['contact_phone'] ?? '');
+        $query        = trim($_POST['query'] ?? '');
+
+        if ($contactPref === 'email' && ($contactEmail === '' || !filter_var($contactEmail, FILTER_VALIDATE_EMAIL))) {
+            $formErrors[] = 'Please enter a valid email address.';
+        }
+        if ($contactPref === 'phone' && $contactPhone === '') {
+            $formErrors[] = 'Please enter your phone number.';
+        }
+        if ($query === '') $formErrors[] = 'Please describe your query.';
+
+        $entry += [
+            'contact_pref' => $contactPref,
+            'contact'      => $contactPref === 'email' ? $contactEmail : $contactPhone,
+            'plot_number'  => trim($_POST['plot_number'] ?? ''),
+            'meter_number' => trim($_POST['meter_number'] ?? ''),
+            'query'        => $query,
+        ];
+
+    } elseif ($formType === 'business') {
+        $email   = trim($_POST['email'] ?? '');
+        $message = trim($_POST['message'] ?? '');
+
+        if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $formErrors[] = 'Please enter a valid email address.';
+        }
+        if ($message === '') $formErrors[] = 'Please tell us what you need help with.';
+
+        $entry += [
+            'email'        => $email,
+            'phone'        => trim($_POST['phone'] ?? ''),
+            'organisation' => trim($_POST['organisation'] ?? ''),
+            'inquiry_type' => trim($_POST['inquiry_type'] ?? ''),
+            'message'      => $message,
+        ];
+
+    } elseif ($formType === 'sponsorship') {
+        $email       = trim($_POST['email'] ?? '');
+        $requestType = trim($_POST['request_type'] ?? '');
+        $message     = trim($_POST['message'] ?? '');
+
+        if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $formErrors[] = 'Please enter a valid email address.';
+        }
+        if ($requestType === '') $formErrors[] = 'Please select a type of request.';
+        if ($message === '') $formErrors[] = 'Please add a brief description.';
+
+        $entry += [
+            'organisation' => trim($_POST['organisation'] ?? ''),
+            'email'        => $email,
+            'phone'        => trim($_POST['phone'] ?? ''),
+            'request_type' => $requestType,
+            'project_name' => trim($_POST['project_name'] ?? ''),
+            'message'      => $message,
+        ];
     }
 
     if (!$formErrors) {
-        $entry = [
-            'name' => $name,
-            'email' => $email,
-            'phone' => $phone,
-            'organisation' => $organisation,
-            'message' => $message,
-            'submitted_at' => date('c'),
-        ];
-
         $storageFile = __DIR__ . '/storage/inquiries.json';
         $entries = [];
-
         if (file_exists($storageFile)) {
             $existing = json_decode(file_get_contents($storageFile), true);
-            if (is_array($existing)) {
-                $entries = $existing;
-            }
+            if (is_array($existing)) $entries = $existing;
         }
-
         $entries[] = $entry;
         file_put_contents($storageFile, json_encode($entries, JSON_PRETTY_PRINT));
-        $formStatus = 'Thank you. Your inquiry has been received.';
+        $formStatus = '✓ Thank you. Your inquiry has been received — we will get back to you within 24 hours.';
         $_POST = [];
     }
 }
@@ -622,85 +661,246 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <!-- Inquiry form (floats up over the hero) -->
-            <div class="cs-form-outer">
+            <!-- Tabbed inquiry forms -->
+            <div class="cs-form-outer" data-active-tab="<?php echo htmlspecialchars($activeTab); ?>">
                 <div class="cs-form-wrap">
-                    <p class="cs-form-title">Send us an inquiry</p>
-                    <p class="cs-form-sub">Fill in the form and one of our specialists will get back to you within 24 hours.</p>
 
-                    <form data-contact-form method="post" action="#contact" novalidate>
+                    <!-- Tab switcher -->
+                    <div class="cs-form-tabs">
+                        <button class="cs-form-tab" data-ctab="forme" type="button">For Me</button>
+                        <button class="cs-form-tab" data-ctab="business" type="button">Business / Private</button>
+                        <button class="cs-form-tab" data-ctab="sponsorship" type="button">Sponsorship &amp; Marketing</button>
+                    </div>
 
-                        <?php if ($formStatus): ?>
+                    <!-- Panel 1: For Me -->
+                    <div class="cs-form-panel" data-cpanel="forme">
+                        <p class="cs-form-title">For Me</p>
+                        <p class="cs-form-sub">Questions about your meter, plot or prepaid water supply? We'll get back to you within 24 hours.</p>
+
+                        <?php if ($activeTab === 'forme' && $formStatus): ?>
                             <div class="form-alert success"><?php echo htmlspecialchars($formStatus); ?></div>
                         <?php endif; ?>
-
-                        <?php if ($formErrors): ?>
-                            <div class="form-alert error">
-                                <?php foreach ($formErrors as $error): ?>
-                                    <p><?php echo htmlspecialchars($error); ?></p>
-                                <?php endforeach; ?>
-                            </div>
+                        <?php if ($activeTab === 'forme' && $formErrors): ?>
+                            <div class="form-alert error"><?php foreach ($formErrors as $e): ?><p><?php echo htmlspecialchars($e); ?></p><?php endforeach; ?></div>
                         <?php endif; ?>
 
-                        <div class="cs-form-grid">
+                        <form data-contact-form method="post" action="#contact" novalidate>
+                            <input type="hidden" name="form_type" value="forme">
+                            <div class="cs-form-grid">
 
-                            <div class="cs-field">
-                                <label>Full name</label>
-                                <div class="cs-input-icon">
-                                    <?php echo renderIcon('users'); ?>
-                                    <input type="text" name="name"
-                                        value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>"
-                                    >
+                                <div class="cs-field cs-form-full">
+                                    <label>Full names</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('users'); ?>
+                                        <input type="text" name="name" value="<?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['name'] ?? '') : ''); ?>">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="cs-field">
-                                <label>Email address</label>
-                                <div class="cs-input-icon">
-                                    <?php echo renderIcon('mail'); ?>
-                                    <input type="email" name="email"
-                                        value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
-                                >
+                                <div class="cs-field cs-form-full">
+                                    <label>How would you like us to contact you?</label>
+                                    <div class="cs-contact-pref">
+                                        <label class="cs-pref-option">
+                                            <input type="radio" name="contact_pref" value="email" checked> Email address
+                                        </label>
+                                        <label class="cs-pref-option">
+                                            <input type="radio" name="contact_pref" value="phone"> Phone number
+                                        </label>
+                                    </div>
+                                    <div class="cs-pref-field" data-pref="email">
+                                        <input type="email" name="contact_email" placeholder="Your email address">
+                                    </div>
+                                    <div class="cs-pref-field" data-pref="phone" style="display:none">
+                                        <input type="tel" name="contact_phone" placeholder="Your phone number">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="cs-field">
-                                <label>Phone number</label>
-                                <div class="cs-input-icon">
-                                    <?php echo renderIcon('phone'); ?>
-                                    <input type="tel" name="phone"
-                                        value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>"
-                                    >
+                                <div class="cs-field">
+                                    <label>Plot number</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('pin'); ?>
+                                        <input type="text" name="plot_number" value="<?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['plot_number'] ?? '') : ''); ?>">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="cs-field">
-                                <label>Organisation</label>
-                                <div class="cs-input-icon">
-                                    <?php echo renderIcon('flag'); ?>
-                                    <input type="text" name="organisation"
-                                        value="<?php echo htmlspecialchars($_POST['organisation'] ?? ''); ?>"
-    >
+                                <div class="cs-field">
+                                    <label>Meter number</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('gauge'); ?>
+                                        <input type="text" name="meter_number" value="<?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['meter_number'] ?? '') : ''); ?>">
+                                    </div>
                                 </div>
+
+                                <div class="cs-field cs-form-full">
+                                    <label>Query</label>
+                                    <textarea name="query" rows="5" placeholder="Explain in detail how we can help you..."><?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['query'] ?? '') : ''); ?></textarea>
+                                </div>
+
+                                <div class="cs-form-full">
+                                    <button class="cs-submit" type="submit">
+                                        <?php echo renderIcon('arrow-right'); ?> Send inquiry
+                                    </button>
+                                </div>
+
                             </div>
+                        </form>
+                    </div><!-- /panel forme -->
 
-                            <div class="cs-field cs-form-full">
-                                <label>Message</label>
-                                <textarea name="message" rows="5"
-                                    placeholder="Tell us about your project or requirements..."
-                                    required><?php echo htmlspecialchars($_POST['message'] ?? ''); ?></textarea>
+                    <!-- Panel 2: Business / Private -->
+                    <div class="cs-form-panel" data-cpanel="business">
+                        <p class="cs-form-title">Business / Private</p>
+                        <p class="cs-form-sub">Fill in the form and one of our specialists will get back to you within 24 hours.</p>
+
+                        <?php if ($activeTab === 'business' && $formStatus): ?>
+                            <div class="form-alert success"><?php echo htmlspecialchars($formStatus); ?></div>
+                        <?php endif; ?>
+                        <?php if ($activeTab === 'business' && $formErrors): ?>
+                            <div class="form-alert error"><?php foreach ($formErrors as $e): ?><p><?php echo htmlspecialchars($e); ?></p><?php endforeach; ?></div>
+                        <?php endif; ?>
+
+                        <form data-contact-form method="post" action="#contact" novalidate>
+                            <input type="hidden" name="form_type" value="business">
+                            <div class="cs-form-grid">
+
+                                <div class="cs-field">
+                                    <label>Full name</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('users'); ?>
+                                        <input type="text" name="name" value="<?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['name'] ?? '') : ''); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="cs-field">
+                                    <label>Email address</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('mail'); ?>
+                                        <input type="email" name="email" value="<?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['email'] ?? '') : ''); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="cs-field">
+                                    <label>Phone number</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('phone'); ?>
+                                        <input type="tel" name="phone" value="<?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['phone'] ?? '') : ''); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="cs-field">
+                                    <label>Organisation</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('flag'); ?>
+                                        <input type="text" name="organisation" value="<?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['organisation'] ?? '') : ''); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="cs-field cs-form-full">
+                                    <label>Nature of inquiry</label>
+                                    <div class="cs-input-icon cs-input-select">
+                                        <?php echo renderIcon('trend'); ?>
+                                        <select name="inquiry_type">
+                                            <option value="">Select a category</option>
+                                            <option value="general" <?php echo ($activeTab === 'business' && ($_POST['inquiry_type'] ?? '') === 'general') ? 'selected' : ''; ?>>General Inquiry</option>
+                                            <option value="installation" <?php echo ($activeTab === 'business' && ($_POST['inquiry_type'] ?? '') === 'installation') ? 'selected' : ''; ?>>Meter Installation</option>
+                                            <option value="support" <?php echo ($activeTab === 'business' && ($_POST['inquiry_type'] ?? '') === 'support') ? 'selected' : ''; ?>>Service &amp; Support</option>
+                                            <option value="pricing" <?php echo ($activeTab === 'business' && ($_POST['inquiry_type'] ?? '') === 'pricing') ? 'selected' : ''; ?>>Pricing &amp; Quotation</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="cs-field cs-form-full">
+                                    <label>Message</label>
+                                    <textarea name="message" rows="5" placeholder="Tell us about your project or requirements..."><?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['message'] ?? '') : ''); ?></textarea>
+                                </div>
+
+                                <div class="cs-form-full">
+                                    <button class="cs-submit" type="submit">
+                                        <?php echo renderIcon('arrow-right'); ?> Send inquiry
+                                    </button>
+                                </div>
+
                             </div>
+                        </form>
+                    </div><!-- /panel business -->
 
-                            <div class="cs-form-full">
-                                <button class="cs-submit" type="submit">
-                                    <?php echo renderIcon('arrow-right'); ?>
-                                    Send inquiry
-                                </button>
+                    <!-- Panel 3: Sponsorship & Marketing -->
+                    <div class="cs-form-panel" data-cpanel="sponsorship">
+                        <p class="cs-form-title">Sponsorship &amp; Marketing</p>
+                        <p class="cs-form-sub">Interested in partnering with or sponsoring a Leeroy Systems initiative? Tell us more below.</p>
+
+                        <?php if ($activeTab === 'sponsorship' && $formStatus): ?>
+                            <div class="form-alert success"><?php echo htmlspecialchars($formStatus); ?></div>
+                        <?php endif; ?>
+                        <?php if ($activeTab === 'sponsorship' && $formErrors): ?>
+                            <div class="form-alert error"><?php foreach ($formErrors as $e): ?><p><?php echo htmlspecialchars($e); ?></p><?php endforeach; ?></div>
+                        <?php endif; ?>
+
+                        <form data-contact-form method="post" action="#contact" novalidate>
+                            <input type="hidden" name="form_type" value="sponsorship">
+                            <div class="cs-form-grid">
+
+                                <div class="cs-field">
+                                    <label>Full name</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('users'); ?>
+                                        <input type="text" name="name" value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['name'] ?? '') : ''); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="cs-field">
+                                    <label>Organisation / Brand</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('flag'); ?>
+                                        <input type="text" name="organisation" value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['organisation'] ?? '') : ''); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="cs-field">
+                                    <label>Email address</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('mail'); ?>
+                                        <input type="email" name="email" value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['email'] ?? '') : ''); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="cs-field">
+                                    <label>Phone number</label>
+                                    <div class="cs-input-icon">
+                                        <?php echo renderIcon('phone'); ?>
+                                        <input type="tel" name="phone" value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['phone'] ?? '') : ''); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="cs-field cs-form-full">
+                                    <label>Type of request</label>
+                                    <div class="cs-input-icon cs-input-select">
+                                        <?php echo renderIcon('trend'); ?>
+                                        <select name="request_type">
+                                            <option value="">Select a type</option>
+                                            <option value="sponsorship" <?php echo ($activeTab === 'sponsorship' && ($_POST['request_type'] ?? '') === 'sponsorship') ? 'selected' : ''; ?>>Sponsorship</option>
+                                            <option value="partnership" <?php echo ($activeTab === 'sponsorship' && ($_POST['request_type'] ?? '') === 'partnership') ? 'selected' : ''; ?>>Partnership</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="cs-field cs-form-full">
+                                    <label>Project / Campaign name <span class="cs-optional">(optional)</span></label>
+                                    <input type="text" name="project_name" value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['project_name'] ?? '') : ''); ?>" placeholder="Name of your initiative or campaign">
+                                </div>
+
+                                <div class="cs-field cs-form-full">
+                                    <label>Brief description</label>
+                                    <textarea name="message" rows="5" placeholder="Tell us about your proposal and what you are looking for..."><?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['message'] ?? '') : ''); ?></textarea>
+                                </div>
+
+                                <div class="cs-form-full">
+                                    <button class="cs-submit" type="submit">
+                                        <?php echo renderIcon('arrow-right'); ?> Send inquiry
+                                    </button>
+                                </div>
+
                             </div>
-
-                        </div><!-- /.cs-form-grid -->
-
-                    </form>
+                        </form>
+                    </div><!-- /panel sponsorship -->
 
                 </div><!-- /.cs-form-wrap -->
             </div><!-- /.cs-form-outer -->

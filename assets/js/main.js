@@ -77,6 +77,32 @@ const visitorBotQuestions = [
         answer: 'Call (+267) 393 2519, email info@leeroysystems.co.bw, or visit Plot 176, Gaborone International Commerce Park.',
         category: 'Support',
     },
+    {
+        id: 'bot-11',
+        question: 'How do I report a damaged or vandalised meter?',
+        answer: 'Call us immediately on (+267) 393 2519 or email info@leeroysystems.co.bw. Please note your meter number, plot location and what you observed. Do not attempt to repair or tamper with the meter yourself — our field team will take it from there.',
+        category: 'Meter Damage',
+        cta: { label: 'Submit a Report', href: 'index.php#contact' },
+    },
+    {
+        id: 'bot-12',
+        question: 'What counts as meter vandalism?',
+        answer: 'Vandalism includes deliberately breaking the meter casing, removing or altering the meter, bypassing the system to obtain unpaid water, tampering with the CIU or communication unit, and removing the meter seal. All are reportable offences.',
+        category: 'Meter Damage',
+    },
+    {
+        id: 'bot-13',
+        question: 'What happens after I report damage?',
+        answer: 'Our field team will assess the damage within 24–48 hours, secure the site if there is a risk of water loss, and arrange repair or replacement.',
+        category: 'Meter Damage',
+    },
+    {
+        id: 'bot-14',
+        question: 'Can I still get water if my meter is damaged?',
+        answer: 'If the damage prevents normal operation, our team will assess an emergency supply arrangement while repairs are underway. Contact (+267) 393 2519 as soon as possible so we can prioritise your case.',
+        category: 'Meter Damage',
+        cta: { label: 'Contact Us Now', href: 'index.php#contact' },
+    },
 ];
 
 const visitorBotLinks = [
@@ -603,6 +629,8 @@ const initVisitorBot = () => {
                     </div>
                 </div>
                 <div class="bot-actions bot-drawer-actions"></div>
+                <div class="bot-shortcuts-label bot-damage-label">⚠ Meter Damage &amp; Vandalism</div>
+                <div class="bot-actions bot-damage-actions" data-bot-damage></div>
                 <div class="bot-shortcuts-label">Quick site shortcuts</div>
                 <div class="bot-shortcuts bot-drawer-shortcuts"></div>
             </div>
@@ -616,6 +644,7 @@ const initVisitorBot = () => {
                     <h4 data-bot-answer-question></h4>
                     <p data-bot-answer-text></p>
                 </article>
+                <div class="bot-answer-cta" data-bot-answer-cta hidden></div>
                 <div class="bot-shortcuts-label">Follow-up questions</div>
                 <div class="bot-actions bot-followups" data-bot-followups></div>
             </div>
@@ -637,6 +666,8 @@ const initVisitorBot = () => {
     const botFollowups = document.querySelector('[data-bot-followups]');
     const botActionRow = document.querySelector('.bot-drawer-actions');
     const botShortcuts = document.querySelector('.bot-drawer-shortcuts');
+    const botDamage = document.querySelector('[data-bot-damage]');
+    const botAnswerCta = document.querySelector('[data-bot-answer-cta]');
 
     if (!botLauncher || !botDrawer || !botChat || !botHome || !botAnswerView || !botAnswerCategory || !botAnswerQuestion || !botAnswerText || !botFollowups || !botActionRow || !botShortcuts) return;
 
@@ -649,6 +680,19 @@ const initVisitorBot = () => {
             button.textContent = item.question;
             botActionRow.appendChild(button);
         });
+    }
+
+    if (botDamage && !botDamage.children.length) {
+        visitorBotQuestions
+            .filter((q) => q.category === 'Meter Damage')
+            .forEach((item) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'bot-chip bot-chip-alert';
+                button.dataset.botQuestion = item.id;
+                button.textContent = item.question;
+                botDamage.appendChild(button);
+            });
     }
 
     if (!botShortcuts.children.length) {
@@ -685,6 +729,21 @@ const initVisitorBot = () => {
         botAnswerCategory.textContent = item.category;
         botAnswerQuestion.textContent = item.question;
         botAnswerText.textContent = item.answer;
+
+        if (botAnswerCta) {
+            botAnswerCta.innerHTML = '';
+            if (item.cta) {
+                const ctaLink = document.createElement('a');
+                ctaLink.className = 'bot-cta-link';
+                ctaLink.href = item.cta.href;
+                ctaLink.textContent = item.cta.label + ' →';
+                ctaLink.addEventListener('click', () => closeDrawer());
+                botAnswerCta.appendChild(ctaLink);
+                botAnswerCta.hidden = false;
+            } else {
+                botAnswerCta.hidden = true;
+            }
+        }
 
         botFollowups.innerHTML = '';
         const followups = visitorBotQuestions
@@ -760,5 +819,43 @@ const initVisitorBot = () => {
         if (event.key === 'Escape') closeDrawer();
     });
 };
+
+(function initSuccessAlert() {
+    const alert = document.querySelector('.form-alert.success');
+    if (!alert) return;
+    setTimeout(() => {
+        alert.style.transition = 'opacity 600ms ease';
+        alert.style.opacity = '0';
+        setTimeout(() => alert.remove(), 620);
+    }, 5000);
+}());
+
+(function initContactTabs() {
+    const outer = document.querySelector('.cs-form-outer');
+    if (!outer) return;
+
+    const tabs   = outer.querySelectorAll('[data-ctab]');
+    const panels = outer.querySelectorAll('[data-cpanel]');
+
+    function activate(key) {
+        tabs.forEach(t   => t.classList.toggle('active', t.dataset.ctab   === key));
+        panels.forEach(p => p.classList.toggle('active', p.dataset.cpanel === key));
+    }
+
+    // Activate the tab that PHP flagged (after a form POST, keeps you on the right panel)
+    activate(outer.dataset.activeTab || 'forme');
+
+    tabs.forEach(tab => tab.addEventListener('click', () => activate(tab.dataset.ctab)));
+
+    // Email / phone preference toggle (For Me form)
+    outer.querySelectorAll('[name="contact_pref"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            const pref = radio.value;
+            outer.querySelectorAll('.cs-pref-field').forEach(field => {
+                field.style.display = field.dataset.pref === pref ? '' : 'none';
+            });
+        });
+    });
+}());
 
 initVisitorBot();
