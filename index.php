@@ -81,7 +81,7 @@ $projects = [
         'scope' => 'Smart prepaid water meter installation and monitoring support.',
         'url' => 'project-debswana-jwaneng.php',
         'images' => [
-            'assets/img/jwaneng-board-.jpg',
+            'assets/img/jwaneng-board1.png',
             'assets/img/leeroy_car.jpg',
             'assets/img/jwa1.jpg',
         ],
