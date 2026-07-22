@@ -10,7 +10,7 @@ $heroSlides = [
         'cta' => '',
     ],
     [
-        'image' => 'assets/img/tower.png',
+        'image' => 'assets/img/NAAS TEST.png',
         'url' => '#projects',
         'eyebrow' => '',
         'title' => '',
@@ -18,7 +18,7 @@ $heroSlides = [
         'cta' => '',
     ],
     [
-        'image' => 'assets/img/built-for-botswana-1920x525.png',
+        'image' => 'assets/img/DAADTEST.png',
         'url' => '#contact',
         'eyebrow' => '',
         'title' => '',
