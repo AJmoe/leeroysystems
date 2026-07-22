@@ -257,9 +257,8 @@ function renderIcon(string $name): string {
                 </div>
                 <div class="careers-gallery">
                     <img src="assets/img/ab-us1.jpg" alt="Leeroy Systems field team">
-                    <img src="assets/img/pearlleeroy.jpg" alt="Leeroy Systems staff">
                     <img src="assets/img/ab-us.jpg" alt="Leeroy Systems operations">
-                    <img src="assets/img/about.jpg" alt="Leeroy Systems team">
+                    <img src="assets/img/WUC03.jpg" alt="Leeroy Systems team">
                 </div>
             </div>
         </section>
