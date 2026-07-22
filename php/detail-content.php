@@ -98,7 +98,7 @@ $projectPages = [
         'Readiness insight for wider rollout planning.',
     ],
     'outcome' => 'The pilot created a practical evidence base for future smart metering expansion.',
-    'images' => ['assets/img/palapye.png', 'assets/img/diphalane_mall.jpg'],
+    'images' => ['assets/img/diphalane_mall.jpg'],
 ],
    
     'debswana-jwaneng' => [

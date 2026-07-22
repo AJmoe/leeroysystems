@@ -64,7 +64,6 @@ $projects = [
         'scope' => '13-month contract for installation of domestic and bulk smart prepaid water meters.',
         'url' => 'project-city-of-francistown-council.php',
         'images' => [
-            'assets/img/ghetto.png',
             'assets/img/ft_car.jpeg',
             'assets/img/ft_pumper.jpeg',
         ],
@@ -74,9 +73,7 @@ $projects = [
         'scope' => 'Pilot project for domestic and bulk smart prepaid water metering.',
         'url' => 'project-palapye-district-council.php',
         'images' => [
-            'assets/img/palapye.png',
             'assets/img/diphalane_mall.jpg',
-            
         ],
     ],
     [
