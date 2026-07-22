@@ -495,7 +495,8 @@ h3 {
 
 .hero-slider {
     position: relative;
-    height: clamp(420px, 43vw, 825px);
+    aspect-ratio: 1915 / 821;
+    height: auto;
     overflow: hidden;
     background: var(--navy);
 }
@@ -3189,11 +3190,7 @@ h3 {
     .hero-slider,
     .hero-slide-link,
     .hero-slide-content {
-        min-height: 640px;
-    }
-
-    .hero-slider {
-        height: 640px;
+        min-height: 0;
     }
 
     .hero-slide-content {
