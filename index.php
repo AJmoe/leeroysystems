@@ -2,7 +2,7 @@
 
 $heroSlides = [
     [
-        'image' => 'assets/img/saas1.png',
+        'image' => 'assets/img/TEST2.png',
         'url' => '#services',
         'eyebrow' => '',
         'title' => '',
