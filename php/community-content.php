@@ -102,6 +102,90 @@ $inhouse = [
     ],
 ];
 
+$training = [
+    [
+        'title' => 'Internal Customer Training',
+        'summary' => "Day 2 of internal customer training, focused on the skills and mindset behind professional, empathetic customer care: listening actively, responding with clarity and respect, and owning the customer experience.",
+        'image' => 'assets/img/training-customer-care-1.jpg',
+        'icon' => 'users',
+        'photos' => [
+            'assets/img/training-customer-care-1.jpg',
+            'assets/img/training-customer-care-2.jpg',
+            'assets/img/training-customer-care-3.jpg',
+            'assets/img/training-customer-care-4.jpg',
+            'assets/img/training-customer-care-5.jpg',
+        ],
+    ],
+    [
+        'title' => 'Kaizen Training Launch',
+        'summary' => 'The official start of our Kaizen (continuous improvement) journey, facilitated by the Local Enterprise Authority and delivered by the Botswana National Productivity Centre, bringing our whole team together around a culture of getting better every day.',
+        'image' => 'assets/img/training-kaizen-launch-1.jpg',
+        'icon' => 'star',
+        'photos' => [
+            'assets/img/training-kaizen-launch-1.jpg',
+            'assets/img/training-kaizen-launch-2.jpg',
+            'assets/img/training-kaizen-launch-3.jpg',
+            'assets/img/training-kaizen-launch-4.jpg',
+            'assets/img/training-kaizen-launch-5.jpg',
+        ],
+    ],
+    [
+        'title' => 'Kaizen Training – Session 2 of 5',
+        'summary' => 'Held on 15 December 2025. Kaizen means "change for the better": smart, consistent improvements. Even heading into the festive season, our commitment to continuous improvement stayed switched on.',
+        'image' => 'assets/img/training-kaizen-session2-1.jpg',
+        'icon' => 'activity',
+        'photos' => [
+            'assets/img/training-kaizen-session2-1.jpg',
+            'assets/img/training-kaizen-session2-2.jpg',
+            'assets/img/training-kaizen-session2-3.jpg',
+            'assets/img/training-kaizen-session2-4.jpg',
+            'assets/img/training-kaizen-session2-5.jpg',
+            'assets/img/training-kaizen-session2-6.jpg',
+            'assets/img/training-kaizen-session2-7.jpg',
+            'assets/img/training-kaizen-session2-8.jpg',
+        ],
+    ],
+    [
+        'title' => 'Kaizen Training – Q1 Kickoff',
+        'summary' => 'Setting the tone for a productive first quarter. Facilitated by the Local Enterprise Authority with training support from BNPC, this session reinforced continuous improvement as part of everyday work, everyone\'s responsibility, driving performance, quality and client satisfaction.',
+        'image' => 'assets/img/training-kaizen-q1-1.jpg',
+        'icon' => 'sun',
+        'photos' => [
+            'assets/img/training-kaizen-q1-1.jpg',
+            'assets/img/training-kaizen-q1-2.jpg',
+            'assets/img/training-kaizen-q1-3.jpg',
+            'assets/img/training-kaizen-q1-4.jpg',
+            'assets/img/training-kaizen-q1-5.jpg',
+            'assets/img/training-kaizen-q1-6.jpg',
+        ],
+    ],
+];
+
+$videoCards = [
+    [
+        'key' => 'self-service',
+        'title' => 'Self Service',
+        'tagline' => 'Quick videos to help you use your meter and get answers without waiting on a call.',
+        'items' => [
+            ['title' => '(CIU) Customer Interface Unit - Sample', 'youtube' => 'P7ATzr-5T78'],
+            ['title' => 'Leeroy Systems FAQs Answered', 'youtube' => 'oBcr6A7tqEI'],
+            ['title' => 'Benefits of SPWM', 'youtube' => '6aWH0lpwVGI'],
+            ['title' => 'Meter Control Operation Centre (MCCO)', 'youtube' => 'Jh1lHTUiICU'],
+        ],
+    ],
+    [
+        'key' => 'testimony',
+        'title' => 'Testimony',
+        'tagline' => 'Stories from the projects and communities we serve.',
+        'items' => [
+            ['title' => 'WUC - Leeroy Systems Activation at Sedibeng House', 'youtube' => 'OaEbtrhRrwU'],
+            ['title' => 'Tsholofelo East Installation', 'youtube' => 'ZPuFVY3E92o'],
+            ['title' => 'Palapye Diphalana Mall', 'youtube' => '93QZFARUzqM'],
+            ['title' => '4th Industrial Revolution', 'youtube' => 'JVcGOAEKBbU'],
+        ],
+    ],
+];
+
 
 $footerAffiliations = [
     ['name' => 'Business Botswana', 'logo' => 'assets/img/partners/SWAN.png'],
@@ -141,6 +225,20 @@ $focusAreas = [
                 'photos'  => $item['photos'],
             ];
         }, $inhouse),
+    ],
+    [
+        'key' => 'training',
+        'title' => 'Training Sessions',
+        'tagline' => 'Investing in our team through ongoing customer care and Kaizen training and development.',
+        'image' => 'assets/img/training-kaizen-launch-1.jpg',
+        'items' => array_map(function ($item) {
+            return [
+                'title'   => $item['title'],
+                'image'   => $item['image'],
+                'summary' => $item['summary'],
+                'photos'  => $item['photos'],
+            ];
+        }, $training),
     ],
     [
         'key' => 'outreach',
@@ -219,7 +317,7 @@ function renderIcon(string $name): string {
                     <li class="nav-dropdown">
                         <a href="index.php#services">Services</a>
                         <ul class="dropdown-menu" aria-label="Service pages">
-                            <li><a href="service-meters-as-a-service.php">Meters as a Service</a></li>
+                            <li><a href="service-meters-as-a-service.php">Metering as a Service</a></li>
                             <li><a href="service-data-as-a-service.php">Data as a Service</a></li>
                             <li><a href="service-network-as-a-service.php">Network as a Service</a></li>
                             <li><a href="service-software-as-a-service.php">Software as a Service</a></li>
@@ -351,6 +449,50 @@ function renderIcon(string $name): string {
     </div>
 </div>
 
+<!-- VIDEO MODAL (single instance, reused for every video mini-card) -->
+<div class="video-modal" id="videoModal" aria-hidden="true">
+    <div class="video-modal-inner">
+        <button class="video-modal-close" type="button" aria-label="Close">&times;</button>
+        <div class="video-frame-wrap" data-video-frame></div>
+    </div>
+</div>
+
+        <!-- VIDEOS: Self Service / Testimony -->
+        <section class="section" id="videos">
+            <div class="container">
+                <div class="video-cards-grid">
+                    <?php foreach ($videoCards as $card): ?>
+                        <div class="focus-card reveal video-card">
+                            <div class="focus-card-head">
+                                <p class="eyebrow">Watch</p>
+                                <h2><?php echo e($card['title']); ?></h2>
+                                <p><?php echo e($card['tagline']); ?></p>
+                            </div>
+                            <div class="focus-scroll-row" data-focus-scroll>
+                                <?php foreach ($card['items'] as $item): ?>
+                                    <button type="button" class="focus-mini-card"
+                                        data-video-title="<?php echo e($item['title']); ?>"
+                                        data-youtube-id="<?php echo e($item['youtube']); ?>">
+                                        <img src="https://img.youtube.com/vi/<?php echo e($item['youtube']); ?>/hqdefault.jpg" alt="<?php echo e($item['title']); ?>">
+                                        <span class="focus-mini-overlay"></span>
+                                        <span class="focus-play-badge">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                                                <path d="M8 5v14l11-7z"></path>
+                                            </svg>
+                                        </span>
+                                        <span class="focus-mini-body">
+                                            <strong><?php echo e($item['title']); ?></strong>
+                                            <em>Play video <?php echo renderIcon('arrow-right'); ?></em>
+                                        </span>
+                                    </button>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
         <!-- GET INVOLVED CTA -->
         <section class="community-cta-band">
             <div class="container community-cta-inner">
@@ -383,17 +525,10 @@ function renderIcon(string $name): string {
                 <p>Smart prepaid water metering solutions for efficient, accountable and secure water management.</p>
                 <div class="footer-social" aria-label="Follow us">
                     <a href="https://facebook.com/p/Leeroy-Systems-100063566140015" aria-label="Facebook"><?php echo renderIcon('facebook'); ?></a>
-                    
+
                     <a href="https://bw.linkedin.com/in/leeroy-systems-415a142b6" aria-label="LinkedIn"><?php echo renderIcon('linkedin'); ?></a>
                     <a href="https://www.youtube.com/@LeeroySystems" aria-label="YouTube"><?php echo renderIcon('youtube'); ?></a>
                 </div>
-            </div>
-            <div>
-                <h2>Services</h2>
-                <a href="#about">About Us</a>
-                <a href="#contact">Help &amp; Faqs</a>
-                <a href="#services">Services</a>
-                <a href="#contact">Contact</a>
             </div>
             <div>
                 <h2>Contact Us</h2>
@@ -422,6 +557,9 @@ function renderIcon(string $name): string {
                                     alt="<?php echo htmlspecialchars($aff['name']); ?>">
                             </span>
                         <?php endforeach; ?>
+                    </div>
+                    <div class="footer-flag">
+                        <img src="assets/img/botColor.png" alt="Botswana flag">
                     </div>
                 </div>
             </div>

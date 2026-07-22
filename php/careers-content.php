@@ -12,7 +12,7 @@ $whyUs = [
     ],
     [
         'title' => 'Nationwide Presence',
-        'summary' => 'Work across our four branches in Gaborone, Francistown, Palapye and Jwaneng.',
+        'summary' => 'Work across our three branches in Gaborone, Francistown and Palapye.',
         'icon' => 'map',
     ],
     [
@@ -156,7 +156,7 @@ function renderIcon(string $name): string {
                     <li class="nav-dropdown">
                         <a href="index.php#services">Services</a>
                         <ul class="dropdown-menu" aria-label="Service pages">
-                            <li><a href="service-meters-as-a-service.php">Meters as a Service</a></li>
+                            <li><a href="service-meters-as-a-service.php">Metering as a Service</a></li>
                             <li><a href="service-data-as-a-service.php">Data as a Service</a></li>
                             <li><a href="service-network-as-a-service.php">Network as a Service</a></li>
                             <li><a href="service-software-as-a-service.php">Software as a Service</a></li>
@@ -336,7 +336,7 @@ function renderIcon(string $name): string {
 
                             <div class="cs-field cs-form-full">
                                 <textarea name="cover" rows="4"
-                                    placeholder="Cover letter — tell us about yourself and why you want to join Leeroy Systems..."><?php echo e($_POST['cover'] ?? ''); ?></textarea>
+                                    placeholder="Cover letter: tell us about yourself and why you want to join Leeroy Systems..."><?php echo e($_POST['cover'] ?? ''); ?></textarea>
                             </div>
 
                             <div class="cs-field cs-form-full">
@@ -444,7 +444,7 @@ function renderIcon(string $name): string {
                 filename.textContent = file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)';
                 preview.classList.add('visible');
                 uploadBox.classList.add('has-file');
-                uploadLabel.textContent = 'File selected — click to change';
+                uploadLabel.textContent = 'File selected, click to change';
             } else {
                 preview.classList.remove('visible');
                 uploadBox.classList.remove('has-file');

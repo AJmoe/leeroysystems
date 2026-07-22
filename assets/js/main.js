@@ -80,7 +80,7 @@ const visitorBotQuestions = [
     {
         id: 'bot-11',
         question: 'How do I report a damaged or vandalised meter?',
-        answer: 'Call us immediately on (+267) 393 2519 or email info@leeroysystems.co.bw. Please note your meter number, plot location and what you observed. Do not attempt to repair or tamper with the meter yourself — our field team will take it from there.',
+        answer: 'Call us immediately on (+267) 393 2519 or email info@leeroysystems.co.bw. Please note your meter number, plot location and what you observed. Do not attempt to repair or tamper with the meter yourself; our field team will take it from there.',
         category: 'Meter Damage',
         cta: { label: 'Submit a Report', href: 'index.php#contact' },
     },
@@ -524,7 +524,7 @@ if (storyModal) {
     let lastActiveTrigger = null;
     let trapHandler = null;
 
-    document.querySelectorAll('.focus-mini-card').forEach((card) => {
+    document.querySelectorAll('.focus-mini-card:not([data-youtube-id])').forEach((card) => {
         card.addEventListener('click', () => {
             lastActiveTrigger = card;
             modalTitle.textContent = card.dataset.storyTitle || '';
@@ -583,6 +583,88 @@ if (storyModal) {
         if (e.key === 'Escape') closeModal();
     });
 }
+
+// Video modal wiring (YouTube embeds for Self Service / Testimony cards)
+const videoModal = document.getElementById('videoModal');
+if (videoModal) {
+    const videoFrameWrap = videoModal.querySelector('[data-video-frame]');
+    const videoCloseBtn = videoModal.querySelector('.video-modal-close');
+    let lastVideoTrigger = null;
+
+    const closeVideoModal = () => {
+        videoModal.classList.remove('open');
+        videoModal.setAttribute('aria-hidden', 'true');
+        videoFrameWrap.innerHTML = '';
+        if (lastVideoTrigger && typeof lastVideoTrigger.focus === 'function') {
+            lastVideoTrigger.focus();
+        }
+    };
+
+    document.querySelectorAll('.focus-mini-card[data-youtube-id]').forEach((card) => {
+        card.addEventListener('click', () => {
+            lastVideoTrigger = card;
+            const id = card.dataset.youtubeId;
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+            iframe.title = card.dataset.videoTitle || 'Video';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+            videoFrameWrap.innerHTML = '';
+            videoFrameWrap.appendChild(iframe);
+            videoModal.classList.add('open');
+            videoModal.setAttribute('aria-hidden', 'false');
+            videoCloseBtn.focus();
+        });
+    });
+
+    videoCloseBtn.addEventListener('click', closeVideoModal);
+    videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) closeVideoModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeVideoModal();
+    });
+}
+
+// Prev/next arrows for horizontally scrolling card rows (focus-scroll-row)
+document.querySelectorAll('[data-focus-scroll]').forEach((row) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'focus-scroll-wrap';
+    row.parentNode.insertBefore(wrap, row);
+    wrap.appendChild(row);
+
+    const makeArrow = (direction) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `focus-scroll-arrow ${direction}`;
+        btn.setAttribute('aria-label', direction === 'prev' ? 'Previous' : 'Next');
+        btn.innerHTML = direction === 'prev'
+            ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>'
+            : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>';
+        return btn;
+    };
+
+    const prevBtn = makeArrow('prev');
+    const nextBtn = makeArrow('next');
+    wrap.appendChild(prevBtn);
+    wrap.appendChild(nextBtn);
+
+    const scrollAmount = () => {
+        const card = row.querySelector('.focus-mini-card');
+        return card ? card.getBoundingClientRect().width + 16 : 260;
+    };
+
+    prevBtn.addEventListener('click', () => row.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
+    nextBtn.addEventListener('click', () => row.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
+
+    const updateArrows = () => {
+        prevBtn.disabled = row.scrollLeft <= 8;
+        nextBtn.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 16;
+    };
+    row.addEventListener('scroll', updateArrows);
+    window.addEventListener('resize', updateArrows);
+    updateArrows();
+});
 
 const initVisitorBot = () => {
     const existingLauncher = document.querySelector('[data-bot-launcher]');
@@ -859,3 +941,40 @@ const initVisitorBot = () => {
 }());
 
 initVisitorBot();
+
+const initBackToTop = () => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'back-to-top';
+    button.setAttribute('aria-label', 'Back to top');
+    button.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M12 19V5"></path>
+            <path d="M5 12l7-7 7 7"></path>
+        </svg>
+    `;
+    document.body.appendChild(button);
+
+    const toggleVisibility = () => {
+        button.classList.toggle('visible', window.scrollY > 400);
+    };
+    window.addEventListener('scroll', toggleVisibility);
+    toggleVisibility();
+
+    button.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+};
+
+initBackToTop();
+
+// Hide the leading icon in contact-form fields once they have a value or are focused
+document.querySelectorAll('.cs-input-icon input, .cs-input-icon select').forEach((field) => {
+    const wrap = field.closest('.cs-input-icon');
+    const syncHasValue = () => {
+        wrap.classList.toggle('has-value', field.value.trim() !== '');
+    };
+    syncHasValue();
+    field.addEventListener('input', syncHasValue);
+    field.addEventListener('change', syncHasValue);
+});

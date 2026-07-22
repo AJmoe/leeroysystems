@@ -17,22 +17,30 @@ $heroSlides = [
         'summary' => '',
         'cta' => '',
     ],
+    [
+        'image' => 'assets/img/built-for-botswana-1920x525.png',
+        'url' => '#contact',
+        'eyebrow' => '',
+        'title' => '',
+        'summary' => '',
+        'cta' => '',
+    ],
 ];
 
 $services = [
     [
-        'title' => 'Meters as a Service',
+        'title' => 'Metering as a Service',
         'summary' => 'End-to-end metering solutions including deployment, monitoring, maintenance and reporting.',
         'icon' => 'gauge',
         'url' => 'service-meters-as-a-service.php',
-        'image' => 'assets/img/meter1.jpg',
+        'image' => 'assets/img/metering.jpeg',
     ],
     [
         'title' => 'Data as a Service',
         'summary' => 'Reliable data collection, storage, processing and analytics solutions for smarter operations.',
         'icon' => 'database',
         'url' => 'service-data-as-a-service.php',
-        'image' => 'assets/img/DAAS.jpg',
+        'image' => 'assets/img/modedata.png',
     ],
     [
         'title' => 'Network as a Service',
@@ -46,7 +54,7 @@ $services = [
         'summary' => 'Digital tools and connected support designed to streamline metering workflows and adoption.',
         'icon' => 'trend',
         'url' => 'service-software-as-a-service.php',
-        'image' => 'assets/img/saas2.png',
+        'image' => 'assets/img/saaas1.png',
     ],
 ];
 
@@ -68,7 +76,7 @@ $projects = [
         'images' => [
             'assets/img/palapye.png',
             'assets/img/diphalane_mall.jpg',
-            'assets/img/thumbnail.jpg',
+            
         ],
     ],
     [
@@ -97,7 +105,7 @@ $stats = [
     ['value' => '33,000+', 'label' => 'Meters installed'],
     ['value' => '10+', 'label' => 'Years experience'],
     ['value' => '80+', 'label' => 'Team members'],
-    ['value' => '4', 'label' => 'Botswana branches'],
+    ['value' => '3', 'label' => 'Botswana branches'],
 ];
 
 $aboutHighlights = [
@@ -108,12 +116,12 @@ $aboutHighlights = [
     ],
     [
         'title' => '100% Citizen Owned',
-        'summary' => 'Everything built locally — CIU assembly, software, network management and calibration, all done in Botswana, for Botswana.',
+        'summary' => 'Everything built locally: CIU assembly, software, network management and calibration, all done in Botswana, for Botswana.',
         'icon' => 'flag',
     ],
     [
-        'title' => '4 Network Branches in Botswana',
-        'summary' => 'Branches in Gaborone, Jwaneng, Palapye and Francistown support clients across government, mining, councils and commercial sectors.',
+        'title' => '3 Network Branches in Botswana',
+        'summary' => 'Branches in Gaborone, Palapye and Francistown support clients across government, mining, councils and commercial sectors.',
         'icon' => 'map',
     ],
 ];
@@ -206,11 +214,13 @@ $partnerLogo = [
 ];
 
 $aboutSlides = [
-    ['image' => 'assets/img/ab-us1.jpg', 'label' => 'Field Metering'],
-    ['image' => 'assets/img/ab-us.jpg', 'label' => 'Data Intelligence'],
-    ['image' => 'assets/img/abu.jpg', 'label' => 'Network Coverage'],
-    ['image' => 'assets/img/pearlleeroy.jpg', 'label' => 'Utility Support'],
-    ['image' => 'assets/img/about.jpg', 'label' => 'Revenue Control'],
+    ['image' => 'assets/img/ab01.jpg', 'label' => 'Our Team'],
+    ['image' => 'assets/img/ab02.jpg', 'label' => '10th Anniversary'],
+    ['image' => 'assets/img/ab03.jpg', 'label' => 'Field Operations'],
+    ['image' => 'assets/img/ab04.jpg', 'label' => 'Team Collaboration'],
+    ['image' => 'assets/img/ab05.jpg', 'label' => 'Installation Crew'],
+    ['image' => 'assets/img/ab06.jpg', 'label' => 'Head Office'],
+    ['image' => 'assets/img/ab07.jpg', 'label' => 'Smart Metering'],
 ];
 function renderIcon(string $name): string
 {
@@ -342,7 +352,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $entries[] = $entry;
         file_put_contents($storageFile, json_encode($entries, JSON_PRETTY_PRINT));
-        $formStatus = '✓ Thank you. Your inquiry has been received — we will get back to you within 24 hours.';
+
+        require_once __DIR__ . '/php/mail-send.php';
+        sendInquiryEmail($entry);
+
+        $formStatus = '✓ Thank you. Your inquiry has been received. We will get back to you within 24 hours.';
         $_POST = [];
     }
 }
@@ -466,7 +480,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="about-copy">
                     <p class="eyebrow">About us</p>
                     <h2>Botswana's leading smart prepaid metering partner.</h2>
-                    <p>Leeroy Systems is a 100% citizen-owned company based in Gaborone, Botswana — the country's leading smart prepaid water metering and IoT solutions provider. Everything is built locally: CIU assembly, software, network management, and calibration, all done in Botswana, for Botswana. With contracts across government, mining, councils and commercial sectors, Leeroy Systems is the trusted Metering-as-a-Service (MaaS) partner of choice.</p>
+                    <p>Leeroy Systems is a 100% citizen-owned company based in Gaborone, Botswana, the country's leading smart prepaid water metering and IoT solutions provider. Everything is built locally: CIU assembly, software, network management, and calibration, all done in Botswana, for Botswana. With contracts across government, mining, councils and commercial sectors, Leeroy Systems is the trusted Metering-as-a-Service (MaaS) partner of choice.</p>
                 </div>
                 <div class="about-highlights">
                     <?php foreach ($aboutHighlights as $highlight): ?>
@@ -500,7 +514,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <span class="feature-icon"><?php echo renderIcon('target'); ?></span>
                             <h3>Mission</h3>
                         </div>
-                        <p>To deliver quality water usage data and real-time prepaid water metering solutions that exceed industry standards — combining expertise, innovation, and reliability to ensure every system performs and lasts.</p>
+                        <p>To deliver quality water usage data and real-time prepaid water metering solutions that exceed industry standards, combining expertise, innovation, and reliability to ensure every system performs and lasts.</p>
                     </article>
                 </div>
             </div>
@@ -528,8 +542,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        <!-- Partner marquee -->
 <div class="partner-strip">
     <div class="partner-heading">
-        <p class="eyebrow">Strategic partners and affiliates</p>
-        <h2>Trusted by utilities, councils and infrastructure partners.</h2>
+        <p class="eyebrow partner-eyebrow-large">Strategic partners and affiliates</p>
     </div>
 
     <div class="partner-marquee-outer">
@@ -612,7 +625,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="container">
                 <div class="section-heading">
                     <p class="eyebrow">Project cases</p>
-                    <h2>Recent smart metering deployments.</h2>
+                    <h2>Recent smart prepaid water metering deployments.</h2>
                 </div>
                 <div class="project-list">
                     <?php foreach ($projects as $projectIndex => $project): ?>
@@ -1028,22 +1041,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>Smart prepaid water metering solutions for efficient, accountable and secure water management.</p>
                 <div class="footer-social" aria-label="Follow us">
                     <a href="https://facebook.com/p/Leeroy-Systems-100063566140015" aria-label="Facebook"><?php echo renderIcon('facebook'); ?></a>
-                    
+
                     <a href="https://bw.linkedin.com/in/leeroy-systems-415a142b6" aria-label="LinkedIn"><?php echo renderIcon('linkedin'); ?></a>
                     <a href="https://www.youtube.com/@LeeroySystems" aria-label="YouTube"><?php echo renderIcon('youtube'); ?></a>
                 </div>
-            </div>
-            <div>
-                <h2>Services</h2>
-                <a href="#about">About Us</a>
-                <a href="#contact">Help &amp; Faqs</a>
-                <a href="#services">Services</a>
-                <a href="#contact">Contact</a>
-
-                <div class="footer-flag">
-                    <img src="assets/img/botColor.png" alt="Botswana flag">
-               </div>
-
             </div>
             <div>
                 <h2>Contact Us</h2>
@@ -1072,6 +1073,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     alt="<?php echo htmlspecialchars($aff['name']); ?>">
                             </span>
                         <?php endforeach; ?>
+                    </div>
+                    <div class="footer-flag">
+                        <img src="assets/img/botColor.png" alt="Botswana flag">
                     </div>
                 </div>
             </div>
