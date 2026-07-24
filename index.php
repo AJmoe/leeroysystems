@@ -1079,7 +1079,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="container footer-bottom">
             <p>&copy; <?php echo date('Y'); ?> | Hitong Holdings (Pty) Ltd T/A Leeroy Systems</p>
-            <p>Smart Prepaid Metering Solutions</p>
+            <p class="footer-dev-note">
+                <a class="footer-dev-link" href="https://ajmoe.github.io/Nexora-Synth/" target="_blank" rel="noopener noreferrer" aria-label="Visit Nexora Synth">
+                    <span>This website was developed by</span>
+                    <img src="assets/img/nexora-synth-full-transparent.png" alt="Nexora Synth logo">
+                    <span class="footer-dev-tooltip" role="tooltip">Click this to visit the site</span>
+                </a>
+            </p>
         </div>
     </footer>
 

@@ -1853,7 +1853,7 @@ h3 {
 .bot-launcher {
     position: fixed;
     right: 24px;
-    bottom: 24px;
+    bottom: 27px;
     z-index: 260;
     display: inline-flex;
     align-items: center;
@@ -2074,7 +2074,7 @@ h3 {
 @media (max-width: 760px) {
     .bot-launcher {
         right: 14px;
-        bottom: 14px;
+        bottom: 17px;
         min-height: 52px;
         padding-right: 14px;
     }
@@ -2819,7 +2819,7 @@ h3 {
     background:
         linear-gradient(135deg, var(--navy), var(--navy) 62%, var(--grey));
     color: var(--white);
-    padding: 64px 0 24px;
+    padding: 64px 0 14px;
 }
 
 .footer-grid {
@@ -2996,6 +2996,62 @@ h3 {
     border-top: 1px solid rgba(255, 255, 255, 0.14);
     margin-top: 42px;
     padding-top: 18px;
+}
+
+.footer-dev-note {
+    margin: 0;
+    transform: translateY(-10px);
+}
+
+.footer-bottom .footer-dev-link {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.74);
+    text-decoration: none;
+    font-size: 0.86rem;
+    transition: color 180ms ease;
+}
+
+.footer-dev-link:hover {
+    color: var(--white);
+    transform: none;
+}
+
+.footer-dev-link img {
+    order: 2;
+    width: 81px;
+    height: 54px;
+    object-fit: contain;
+    background: var(--white);
+    border-radius: 9px;
+    padding: 3px 6px;
+}
+
+.footer-dev-tooltip {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 8px);
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--navy);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.footer-dev-link:hover .footer-dev-tooltip,
+.footer-dev-link:focus-visible .footer-dev-tooltip {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .footer-flag {
