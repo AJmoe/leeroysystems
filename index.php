@@ -25,6 +25,14 @@ $heroSlides = [
         'summary' => '',
         'cta' => '',
     ],
+    [
+        'image' => 'assets/img/leeroy-systems-banner-2.png',
+        'url' => '#services',
+        'eyebrow' => '',
+        'title' => '',
+        'summary' => '',
+        'cta' => '',
+    ],
 ];
 
 $services = [
