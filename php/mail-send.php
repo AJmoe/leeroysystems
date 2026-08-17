@@ -7,15 +7,44 @@ require_once __DIR__ . '/lib/PHPMailer/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
-function sendInquiryEmail(array $entry): bool
+function loadMailConfig(): ?array
 {
-    $configFile = __DIR__ . '/mail-config.php';
-    if (!file_exists($configFile)) {
-        return false;
+    // Prefer environment variables (set in the Render dashboard in production).
+    // This lets real credentials reach the live server without ever being
+    // committed to git.
+    $envPassword = getenv('SMTP_PASSWORD');
+    if ($envPassword !== false && $envPassword !== '') {
+        return [
+            'host'        => getenv('SMTP_HOST') ?: 'smtp.gmail.com',
+            'port'        => (int) (getenv('SMTP_PORT') ?: 587),
+            'encryption'  => getenv('SMTP_ENCRYPTION') ?: 'tls',
+            'username'    => getenv('SMTP_USERNAME') ?: '',
+            'password'    => $envPassword,
+            'from_email'  => getenv('MAIL_FROM_EMAIL') ?: getenv('SMTP_USERNAME') ?: '',
+            'from_name'   => getenv('MAIL_FROM_NAME') ?: 'Leeroy Systems Website',
+            'to_email'    => getenv('MAIL_TO_EMAIL') ?: getenv('SMTP_USERNAME') ?: '',
+        ];
     }
 
-    $config = require $configFile;
-    if (empty($config['password'])) {
+    // Local dev fallback: php/mail-config.php (gitignored, never deployed).
+    $configFile = __DIR__ . '/mail-config.php';
+    if (file_exists($configFile)) {
+        $config = require $configFile;
+        if (!empty($config['password'])) {
+            return $config;
+        }
+    }
+
+    return null;
+}
+
+function sendInquiryEmail(array $entry): bool
+{
+    $config = loadMailConfig();
+    if ($config === null) {
+        $logFile = __DIR__ . '/../storage/mail-errors.log';
+        $line = '[' . date('c') . '] No mail config found (no SMTP_PASSWORD env var and no mail-config.php).' . "\n";
+        file_put_contents($logFile, $line, FILE_APPEND);
         return false;
     }
 

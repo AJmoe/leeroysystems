@@ -7,3 +7,19 @@ services:
     envVars:
       - key: PORT
         value: 10000
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_ENCRYPTION
+        value: tls
+      - key: SMTP_USERNAME
+        value: leeroysystemsbw@gmail.com
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: MAIL_FROM_EMAIL
+        value: leeroysystemsbw@gmail.com
+      - key: MAIL_FROM_NAME
+        value: Leeroy Systems Website
+      - key: MAIL_TO_EMAIL
+        value: leeroysystemsbw@gmail.com
