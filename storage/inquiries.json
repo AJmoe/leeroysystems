@@ -38,5 +38,15 @@
         "plot_number": "4257812",
         "meter_number": "125489752",
         "query": "testing"
+    },
+    {
+        "form_type": "forme",
+        "name": "Website Email Test",
+        "submitted_at": "2026-08-17T12:55:32+00:00",
+        "contact_pref": "email",
+        "contact": "aobakwemoerane@gmail.com",
+        "plot_number": "",
+        "meter_number": "",
+        "query": "This is an automated test to confirm the App Password fix works and email delivery reaches leeroysystemsbw@gmail.com."
     }
 ]

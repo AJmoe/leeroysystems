@@ -29,6 +29,11 @@ function e(string $value): string
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?php echo e($page['summary']); ?>">
     <title><?php echo e($page['title']); ?> | Leeroy Systems</title>
+    <link rel="icon" href="assets/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -75,7 +80,7 @@ function e(string $value): string
     </header>
 
     <main id="main">
-        <section class="detail-hero">
+        <section class="detail-hero<?php echo !empty($page['hero_plain']) ? ' detail-hero-plain' : ''; ?>">
                 <?php if (!empty($page['hero_video'])): ?>
                     <video autoplay muted loop playsinline
                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
@@ -84,12 +89,16 @@ function e(string $value): string
                 <?php else: ?>
                     <img src="<?php echo e($page['hero']); ?>" alt="<?php echo e($page['title']); ?>">
                 <?php endif; ?>
-                <span class="detail-hero-overlay"></span>
-                <div class="container detail-hero-content">
-                    <p class="eyebrow"><?php echo e($page['eyebrow']); ?></p>
-                    <h1><?php echo e($page['title']); ?></h1>
-                    <p><?php echo e($page['summary']); ?></p>
-                </div>
+                <?php if (empty($page['hero_plain'])): ?>
+                    <span class="detail-hero-overlay"></span>
+                    <div class="container detail-hero-content">
+                        <p class="eyebrow"><?php echo e($page['eyebrow']); ?></p>
+                        <h1><?php echo e($page['title']); ?></h1>
+                        <p><?php echo e($page['summary']); ?></p>
+                    </div>
+                <?php else: ?>
+                    <h1 class="sr-only"><?php echo e($page['title']); ?></h1>
+                <?php endif; ?>
         </section>
 
         <section class="section detail-section">

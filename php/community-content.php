@@ -520,7 +520,7 @@ function renderIcon(string $name): string {
     <footer class="site-footer">
         <div class="container footer-grid">
              <div class="footer-about">
-                <img src="assets/img/leeroy-systems.jpg" alt="Leeroy Systems" class="footer-logo">
+                <img src="assets/img/leeroy-logo-white.png" alt="Leeroy Systems" class="footer-logo">
                 <h2>About Us</h2>
                 <p>Smart prepaid water metering solutions for efficient, accountable and secure water management.</p>
                 <div class="footer-social" aria-label="Follow us">

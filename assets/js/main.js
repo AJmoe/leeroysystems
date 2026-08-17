@@ -6,7 +6,7 @@ const mobileMenuQuery = window.matchMedia('(max-width: 760px)');
 const revealItems = document.querySelectorAll('.reveal');
 const tabButtons = document.querySelectorAll('[role="tab"]');
 const tabPanels = document.querySelectorAll('.tab-panel');
-const contactForm = document.querySelector('[data-contact-form]');
+const contactForms = document.querySelectorAll('[data-contact-form]');
 const heroSlides = document.querySelectorAll('[data-slide]');
 const heroControls = document.querySelectorAll('[data-slide-control]');
 const heroArrows = document.querySelectorAll('[data-slide-direction]');
@@ -320,9 +320,12 @@ tabButtons.forEach((button) => {
     });
 });
 
-if (contactForm) {
+contactForms.forEach((contactForm) => {
     contactForm.addEventListener('submit', (event) => {
-        const requiredFields = contactForm.querySelectorAll('[required]');
+        // Skip fields that are hidden (e.g. the phone input when "Email" is the chosen
+        // contact preference) — they're not required in that state even if marked so.
+        const requiredFields = Array.from(contactForm.querySelectorAll('[required]'))
+            .filter((field) => field.offsetParent !== null);
         let valid = true;
 
         requiredFields.forEach((field) => {
@@ -340,9 +343,24 @@ if (contactForm) {
             if (firstInvalid) {
                 firstInvalid.focus();
             }
+            return;
+        }
+
+        // Guard against double/triple submits (e.g. impatient double-clicks) — the
+        // form still posts normally, this just stops it from firing twice.
+        const submitBtn = contactForm.querySelector('.cs-submit');
+        if (submitBtn) {
+            if (submitBtn.dataset.sending === 'true') {
+                event.preventDefault();
+                return;
+            }
+            submitBtn.dataset.sending = 'true';
+            submitBtn.disabled = true;
+            submitBtn.dataset.originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = submitBtn.innerHTML.replace(/Send inquiry/i, 'Sending…');
         }
     });
-}
+});
 
 
 function initStoryGallery(container, photos) {
@@ -934,7 +952,13 @@ const initVisitorBot = () => {
         radio.addEventListener('change', () => {
             const pref = radio.value;
             outer.querySelectorAll('.cs-pref-field').forEach(field => {
-                field.style.display = field.dataset.pref === pref ? '' : 'none';
+                const isActive = field.dataset.pref === pref;
+                field.style.display = isActive ? '' : 'none';
+                const input = field.querySelector('input');
+                if (input) {
+                    input.required = isActive;
+                    if (!isActive) input.removeAttribute('aria-invalid');
+                }
             });
         });
     });

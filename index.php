@@ -2,7 +2,7 @@
 
 $heroSlides = [
     [
-        'image' => 'assets/img/TEST2.png',
+        'image' => 'assets/img/hero-banner-1.png',
         'url' => '#services',
         'eyebrow' => '',
         'title' => '',
@@ -10,7 +10,7 @@ $heroSlides = [
         'cta' => '',
     ],
     [
-        'image' => 'assets/img/NAAS TEST.png',
+        'image' => 'assets/img/hero-banner-2.png',
         'url' => '#projects',
         'eyebrow' => '',
         'title' => '',
@@ -18,16 +18,8 @@ $heroSlides = [
         'cta' => '',
     ],
     [
-        'image' => 'assets/img/DAADTEST.png',
+        'image' => 'assets/img/hero-banner-3.png',
         'url' => '#contact',
-        'eyebrow' => '',
-        'title' => '',
-        'summary' => '',
-        'cta' => '',
-    ],
-    [
-        'image' => 'assets/img/leeroy-systems-banner-2.png',
-        'url' => '#services',
         'eyebrow' => '',
         'title' => '',
         'summary' => '',
@@ -259,6 +251,13 @@ function renderIcon(string $name): string
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . $paths . '</svg>';
 }
 
+function renderHoneypot(): string
+{
+    // Spam trap: real visitors never see or fill this field (off-screen + tabindex -1).
+    // Bots that auto-fill every input will trip it; the PHP handler silently discards those.
+    return '<div class="cs-hp" aria-hidden="true"><label>Leave this field blank</label><input type="text" name="website" tabindex="-1" autocomplete="off"></div>';
+}
+
 function partnerInitials(string $name): string
 {
     $words = preg_split('/\s+/', trim($name));
@@ -278,7 +277,14 @@ $formStatus = null;
 $formErrors = [];
 $activeTab = 'forme';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && trim($_POST['website'] ?? '') !== '') {
+    // Honeypot tripped — a bot filled in the hidden field. Pretend success, save/send nothing.
+    $formType   = in_array($_POST['form_type'] ?? '', ['forme', 'business', 'sponsorship'])
+                  ? $_POST['form_type'] : 'forme';
+    $activeTab  = $formType;
+    $formStatus = '✓ Thank you. Your inquiry has been received. We will get back to you within 24 hours.';
+    $_POST = [];
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $formType  = in_array($_POST['form_type'] ?? '', ['forme', 'business', 'sponsorship'])
                  ? $_POST['form_type'] : 'forme';
     $activeTab = $formType;
@@ -373,6 +379,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Leeroy Systems provides smart prepaid water metering solutions in Botswana for utilities, government, businesses, and private customers.">
     <title>Leeroy Systems | Smart Prepaid Water Metering Solutions</title>
+    <link rel="icon" href="assets/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -710,25 +721,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label>Full names</label>
                                     <div class="cs-input-icon">
                                         <?php echo renderIcon('users'); ?>
-                                        <input type="text" name="name" value="<?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['name'] ?? '') : ''); ?>">
+                                        <input type="text" name="name" required value="<?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['name'] ?? '') : ''); ?>">
                                     </div>
                                 </div>
 
+                                <?php
+                                    $cPref = $activeTab === 'forme' ? ($_POST['contact_pref'] ?? 'email') : 'email';
+                                    if (!in_array($cPref, ['email', 'phone'], true)) $cPref = 'email';
+                                ?>
                                 <div class="cs-field cs-form-full">
                                     <label>How would you like us to contact you?</label>
                                     <div class="cs-contact-pref">
                                         <label class="cs-pref-option">
-                                            <input type="radio" name="contact_pref" value="email" checked> Email address
+                                            <input type="radio" name="contact_pref" value="email" <?php echo $cPref === 'email' ? 'checked' : ''; ?>> Email address
                                         </label>
                                         <label class="cs-pref-option">
-                                            <input type="radio" name="contact_pref" value="phone"> Phone number
+                                            <input type="radio" name="contact_pref" value="phone" <?php echo $cPref === 'phone' ? 'checked' : ''; ?>> Phone number
                                         </label>
                                     </div>
-                                    <div class="cs-pref-field" data-pref="email">
-                                        <input type="email" name="contact_email" placeholder="Your email address">
+                                    <div class="cs-pref-field" data-pref="email" <?php echo $cPref !== 'email' ? 'style="display:none"' : ''; ?>>
+                                        <input type="email" name="contact_email" <?php echo $cPref === 'email' ? 'required' : ''; ?> value="<?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['contact_email'] ?? '') : ''); ?>" placeholder="Your email address">
                                     </div>
-                                    <div class="cs-pref-field" data-pref="phone" style="display:none">
-                                        <input type="tel" name="contact_phone" placeholder="Your phone number">
+                                    <div class="cs-pref-field" data-pref="phone" <?php echo $cPref !== 'phone' ? 'style="display:none"' : ''; ?>>
+                                        <input type="tel" name="contact_phone" <?php echo $cPref === 'phone' ? 'required' : ''; ?> value="<?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['contact_phone'] ?? '') : ''); ?>" placeholder="Your phone number">
                                     </div>
                                 </div>
 
@@ -750,8 +765,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 <div class="cs-field cs-form-full">
                                     <label>Query</label>
-                                    <textarea name="query" rows="5" placeholder="Explain in detail how we can help you..."><?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['query'] ?? '') : ''); ?></textarea>
+                                    <textarea name="query" required rows="5" placeholder="Explain in detail how we can help you..."><?php echo htmlspecialchars($activeTab === 'forme' ? ($_POST['query'] ?? '') : ''); ?></textarea>
                                 </div>
+
+                                <?php echo renderHoneypot(); ?>
 
                                 <div class="cs-form-full">
                                     <button class="cs-submit" type="submit">
@@ -783,7 +800,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label>Full name</label>
                                     <div class="cs-input-icon">
                                         <?php echo renderIcon('users'); ?>
-                                        <input type="text" name="name" value="<?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['name'] ?? '') : ''); ?>">
+                                        <input type="text" name="name" required value="<?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['name'] ?? '') : ''); ?>">
                                     </div>
                                 </div>
 
@@ -791,7 +808,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label>Email address</label>
                                     <div class="cs-input-icon">
                                         <?php echo renderIcon('mail'); ?>
-                                        <input type="email" name="email" value="<?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['email'] ?? '') : ''); ?>">
+                                        <input type="email" name="email" required value="<?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['email'] ?? '') : ''); ?>">
                                     </div>
                                 </div>
 
@@ -827,8 +844,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 <div class="cs-field cs-form-full">
                                     <label>Message</label>
-                                    <textarea name="message" rows="5" placeholder="Tell us about your project or requirements..."><?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['message'] ?? '') : ''); ?></textarea>
+                                    <textarea name="message" required rows="5" placeholder="Tell us about your project or requirements..."><?php echo htmlspecialchars($activeTab === 'business' ? ($_POST['message'] ?? '') : ''); ?></textarea>
                                 </div>
+
+                                <?php echo renderHoneypot(); ?>
 
                                 <div class="cs-form-full">
                                     <button class="cs-submit" type="submit">
@@ -860,7 +879,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label>Full name</label>
                                     <div class="cs-input-icon">
                                         <?php echo renderIcon('users'); ?>
-                                        <input type="text" name="name" value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['name'] ?? '') : ''); ?>">
+                                        <input type="text" name="name" required value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['name'] ?? '') : ''); ?>">
                                     </div>
                                 </div>
 
@@ -876,7 +895,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label>Email address</label>
                                     <div class="cs-input-icon">
                                         <?php echo renderIcon('mail'); ?>
-                                        <input type="email" name="email" value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['email'] ?? '') : ''); ?>">
+                                        <input type="email" name="email" required value="<?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['email'] ?? '') : ''); ?>">
                                     </div>
                                 </div>
 
@@ -892,7 +911,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label>Type of request</label>
                                     <div class="cs-input-icon cs-input-select">
                                         <?php echo renderIcon('trend'); ?>
-                                        <select name="request_type">
+                                        <select name="request_type" required>
                                             <option value="">Select a type</option>
                                             <option value="sponsorship" <?php echo ($activeTab === 'sponsorship' && ($_POST['request_type'] ?? '') === 'sponsorship') ? 'selected' : ''; ?>>Sponsorship</option>
                                             <option value="partnership" <?php echo ($activeTab === 'sponsorship' && ($_POST['request_type'] ?? '') === 'partnership') ? 'selected' : ''; ?>>Partnership</option>
@@ -907,8 +926,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                 <div class="cs-field cs-form-full">
                                     <label>Brief description</label>
-                                    <textarea name="message" rows="5" placeholder="Tell us about your proposal and what you are looking for..."><?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['message'] ?? '') : ''); ?></textarea>
+                                    <textarea name="message" required rows="5" placeholder="Tell us about your proposal and what you are looking for..."><?php echo htmlspecialchars($activeTab === 'sponsorship' ? ($_POST['message'] ?? '') : ''); ?></textarea>
                                 </div>
+
+                                <?php echo renderHoneypot(); ?>
 
                                 <div class="cs-form-full">
                                     <button class="cs-submit" type="submit">
@@ -1041,7 +1062,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <footer class="site-footer">
         <div class="container footer-grid">
              <div class="footer-about">
-                <img src="assets/img/leeroy-systems.jpg" alt="Leeroy Systems" class="footer-logo">
+                <img src="assets/img/leeroy-logo-white.png" alt="Leeroy Systems" class="footer-logo">
                 <h2>About Us</h2>
                 <p>Smart prepaid water metering solutions for efficient, accountable and secure water management.</p>
                 <div class="footer-social" aria-label="Follow us">
@@ -1051,7 +1072,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="https://www.youtube.com/@LeeroySystems" aria-label="YouTube"><?php echo renderIcon('youtube'); ?></a>
                 </div>
             </div>
-            <div>
+            <div class="footer-contact-col">
                 <h2>Contact Us</h2>
                 <div class="footer-contact-list">
                     <p class="footer-contact-item">

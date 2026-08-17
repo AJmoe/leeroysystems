@@ -182,14 +182,8 @@ function renderIcon(string $name): string {
     <main id="main">
 
         <!-- HERO -->
-        <section class="detail-hero">
-            <img src="assets/img/careers.png" alt="Leeroy Systems team">
-            <span class="detail-hero-overlay"></span>
-            <div class="container detail-hero-content">
-                <p class="eyebrow">Careers</p>
-                <h1>Build your career with us.</h1>
-                <p>Join a team that is reshaping water management across Botswana through smart technology, dedication and innovation.</p>
-            </div>
+        <section class="detail-hero detail-hero-contain">
+            <img src="assets/img/hero-banner-4.png" alt="Careers at Leeroy Systems. Build your future, make an impact. Join a passionate team dedicated to delivering smart, tailored solutions that create a better life for our communities today and tomorrow.">
         </section>
 
         <!-- CURRENT OPENINGS -->
@@ -371,7 +365,7 @@ function renderIcon(string $name): string {
     <footer class="site-footer">
         <div class="container footer-grid">
              <div class="footer-about">
-                <img src="assets/img/leeroy-systems.jpg" alt="Leeroy Systems" class="footer-logo">
+                <img src="assets/img/leeroy-logo-white.png" alt="Leeroy Systems" class="footer-logo">
                 <h2>About Us</h2>
                 <p>Smart prepaid water metering solutions for efficient, accountable and secure water management.</p>
                 <div class="footer-social" aria-label="Follow us">
