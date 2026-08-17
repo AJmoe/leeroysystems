@@ -48,5 +48,15 @@
         "plot_number": "",
         "meter_number": "",
         "query": "This is an automated test to confirm the App Password fix works and email delivery reaches leeroysystemsbw@gmail.com."
+    },
+    {
+        "form_type": "forme",
+        "name": "Router Regression Test",
+        "submitted_at": "2026-08-17T14:44:45+00:00",
+        "contact_pref": "email",
+        "contact": "aobakwemoerane@gmail.com",
+        "plot_number": "",
+        "meter_number": "",
+        "query": "Confirming the storage\/php lockdown does not break internal require() calls or form submission."
     }
 ]

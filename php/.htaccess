@@ -1,0 +1,11 @@
+# Everything in this folder (page content, mail-config.php, the vendored
+# PHPMailer library) is meant to be require()'d by the root-level .php
+# pages, never requested directly by a browser. Block direct access.
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

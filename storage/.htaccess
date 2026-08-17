@@ -1,0 +1,11 @@
+# Customer inquiries, job applications and uploaded CVs live here.
+# None of it should ever be reachable directly over HTTP - only PHP
+# (via file_get_contents / require) is allowed to read these files.
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

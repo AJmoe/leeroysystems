@@ -3,7 +3,7 @@ services:
     name: leeroysystems
     runtime: php
     buildCommand: ""
-    startCommand: php -S 0.0.0.0:$PORT
+    startCommand: php -S 0.0.0.0:$PORT router.php
     envVars:
       - key: PORT
         value: 10000

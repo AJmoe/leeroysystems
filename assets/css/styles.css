@@ -533,6 +533,12 @@ h3 {
     background: var(--navy);
 }
 
+/* Community hero uses real event photos rather than pre-designed banner
+   graphics, so crop to fill the frame edge-to-edge instead of letterboxing. */
+.community-hero .hero-slide img {
+    object-fit: cover;
+}
+
 .hero-overlay {
     position: absolute;
     inset: 0;

@@ -195,6 +195,12 @@ $footerAffiliations = [
 
 
 
+$communityHeroImages = [
+    'assets/img/mornaerobics_0.jpg',
+    'assets/img/gbmarathon_0.jpg',
+    'assets/img/christmaspart2025_1.jpg',
+];
+
 $gallery = [
     'assets/img/christmaspart2025_0.jpg',
     'assets/img/christmaspart2025_2.jpg',
@@ -345,7 +351,7 @@ function renderIcon(string $name): string {
   <!-- HERO SLIDESHOW -->
 <section class="hero community-hero" id="home">
     <div class="hero-slider" data-hero-slider>
-        <?php foreach ($gallery as $index => $img): if ($index > 2) break; ?>
+        <?php foreach ($communityHeroImages as $index => $img): ?>
             <article class="hero-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-slide>
                 <span class="hero-slide-link">
                     <img src="<?php echo e($img); ?>" alt="Leeroy Systems community">
@@ -359,7 +365,7 @@ function renderIcon(string $name): string {
             </article>
         <?php endforeach; ?>
         <div class="hero-controls container" aria-label="Hero slideshow controls">
-            <?php foreach ($gallery as $index => $img): if ($index > 2) break; ?>
+            <?php foreach ($communityHeroImages as $index => $img): ?>
                 <button type="button" class="<?php echo $index === 0 ? 'active' : ''; ?>" data-slide-control="<?php echo $index; ?>" aria-label="Show slide <?php echo $index + 1; ?>" aria-pressed="<?php echo $index === 0 ? 'true' : 'false'; ?>">
                     <span>Slide <?php echo $index + 1; ?></span>
                 </button>
