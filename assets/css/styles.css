@@ -598,22 +598,30 @@ h3 {
     bottom: 28px;
     transform: translateX(-50%);
     display: flex;
+    justify-content: center;
     gap: 10px;
     z-index: 5;
 }
 
 .hero-controls button {
-    width: 54px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
     border: 0;
-    border-radius: 999px;
+    border-radius: 50%;
     background: rgba(255, 255, 255, 0.42);
     cursor: pointer;
     padding: 0;
+    transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+.hero-controls button:hover {
+    background: rgba(255, 255, 255, 0.7);
 }
 
 .hero-controls button.active {
-    background: var(--teal);
+    background: var(--white);
+    transform: scale(1.45);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
 }
 
 .hero-controls span {
@@ -632,12 +640,11 @@ h3 {
     height: 58px;
     display: grid;
     place-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
     color: var(--white);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 16px 34px rgba(34, 50, 88, 0.24);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
     cursor: pointer;
     transform: translateY(-50%);
     transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
@@ -646,6 +653,7 @@ h3 {
 .hero-arrow:hover {
     background: var(--teal);
     border-color: var(--teal);
+    filter: none;
     transform: translateY(-50%) scale(1.08);
 }
 
@@ -3074,60 +3082,28 @@ h3 {
     line-height: 1.4;
 }
 
-.footer-dev-note {
-    margin: 0;
-    transform: none;
+/* Keep the copyright + dev credit on one line on larger screens;
+   let it wrap naturally on small/mobile screens. */
+@media (min-width: 761px) {
+    .footer-bottom > p {
+        white-space: nowrap;
+    }
 }
 
 .footer-bottom .footer-dev-link {
-    position: relative;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-    color: rgba(255, 255, 255, 0.74);
+    display: inline;
+    margin: 0;
+    font: inherit;
+    color: var(--white);
     text-decoration: none;
-    font-size: 0.86rem;
+    text-underline-offset: 2px;
     transition: color 180ms ease;
 }
 
-.footer-dev-link:hover {
-    color: var(--white);
-    transform: none;
-}
-
-.footer-dev-link img {
-    order: 2;
-    width: 81px;
-    height: 54px;
-    object-fit: contain;
-    background: var(--white);
-    border-radius: 9px;
-    padding: 3px 6px;
-}
-
-.footer-dev-tooltip {
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 8px);
-    white-space: nowrap;
-    background: rgba(255, 255, 255, 0.95);
-    color: var(--navy);
-    border-radius: 6px;
-    padding: 4px 8px;
-    font-size: 0.74rem;
-    font-weight: 700;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(6px);
-    transition: opacity 180ms ease, transform 180ms ease;
-}
-
-.footer-dev-link:hover .footer-dev-tooltip,
-.footer-dev-link:focus-visible .footer-dev-tooltip {
-    opacity: 1;
-    transform: translateY(0);
+.footer-bottom .footer-dev-link:hover,
+.footer-bottom .footer-dev-link:focus-visible {
+    text-decoration: underline;
+    color: rgba(255, 255, 255, 0.74);
 }
 
 .footer-flag {
@@ -3230,46 +3206,34 @@ h3 {
     }
 }
 
-@media (max-width: 760px) {
-    .container {
-        width: min(100% - 28px, 1160px);
-    }
-
-    .header-inner {
-        min-height: 70px;
-    }
-
-    .brand img {
-        width: 110px;
-        height: 50px;
-    }
-
+/* Switch to the hamburger menu as soon as we leave large-screen widths,
+   so the nav links never get squeezed/cut off at tablet sizes. */
+@media (max-width: 980px) {
     .nav-toggle {
         display: block;
     }
 
-   /* Inside @media (max-width: 760px) */
-.site-nav > ul {
-    position: absolute;
-    left: auto;          /* remove left anchor */
-    right: 14px;         /* pin to right side */
-    top: 70px;
-    width: 240px;        /* fixed width — adjust to taste */
-    display: none;
-    background: var(--white);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    padding: 6px;
-    max-height: calc(100vh - 90px);
-    overflow-y: auto;
-    z-index: 50;
-}
+    .site-nav > ul {
+        position: absolute;
+        left: auto;          /* remove left anchor */
+        right: 14px;         /* pin to right side */
+        top: 70px;
+        width: 240px;        /* fixed width — adjust to taste */
+        display: none;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        padding: 6px;
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+        z-index: 50;
+    }
 
-.site-nav > ul.open {
-    display: flex;
-    flex-direction: column;
-}
+    .site-nav > ul.open {
+        display: flex;
+        flex-direction: column;
+    }
 
     .site-nav li {
         width: 100%;
@@ -3280,7 +3244,7 @@ h3 {
         padding: 9px 0;
     }
 
-   .dropdown-menu {
+    .dropdown-menu {
         position: static;
         min-width: 0;
         display: none;
@@ -3298,6 +3262,22 @@ h3 {
     .nav-dropdown.open .dropdown-menu {
         display: grid;
     }
+}
+
+@media (max-width: 760px) {
+    .container {
+        width: min(100% - 28px, 1160px);
+    }
+
+    .header-inner {
+        min-height: 70px;
+    }
+
+    .brand img {
+        width: 110px;
+        height: 50px;
+    }
+
     .cs-cards {
         grid-template-columns: 1fr;
         padding: 0 20px;
@@ -3335,21 +3315,66 @@ h3 {
         justify-content: center;
     }
 
+    /* Community hero overlays real headline text on photos (unlike the
+       home page's pre-made banner graphics), so it needs its own room
+       and smaller type on mobile instead of the tall banner clamp(). */
+    .community-hero .hero-slider {
+        aspect-ratio: auto;
+        min-height: 420px;
+    }
+
+    .community-hero .hero-slide-content {
+        max-width: 100%;
+        padding-right: 24px;
+        padding-top: 36px;
+        padding-bottom: 36px;
+    }
+
+    .community-hero .hero-slide-content strong {
+        font-size: clamp(1.6rem, 8vw, 2.3rem);
+        line-height: 1.08;
+    }
+
+    .community-hero .hero-slide-content > span:not(.eyebrow) {
+        max-width: 100%;
+        font-size: 0.94rem;
+    }
+
     .hero-controls {
         bottom: 20px;
     }
 
     .hero-arrow {
-        width: 48px;
-        height: 48px;
+        top: 0;
+        bottom: 0;
+        width: 34px;
+        height: auto;
+        border: 0;
+        background: rgba(20, 28, 48, 0.32);
+        backdrop-filter: none;
+        box-shadow: none;
+        transform: none;
+    }
+
+    .hero-arrow:hover,
+    .hero-arrow:active {
+        background: rgba(20, 28, 48, 0.52);
+        transform: none;
+    }
+
+    .hero-arrow svg {
+        width: 20px;
+        height: 20px;
     }
 
     .hero-arrow-prev {
-        left: 16px;
+        left: 0;
+        border-radius: 0 6px 6px 0;
     }
 
     .hero-arrow-next {
-        right: 16px;
+        right: 0;
+        border-radius: 6px 0 0 6px;
     }
 
     .hero-grid {
@@ -3446,27 +3471,40 @@ h3 {
 }
 
 @media (max-width: 520px)  {
-    .stats-grid,
     .service-grid,
     .partner-logos {
         grid-template-columns: 1fr;
     }
 
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .stat,
     .stat:last-child {
         border: 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.14);
         border-bottom: 1px solid rgba(255, 255, 255, 0.14);
         min-height: 0;
-        padding: 18px 4px;
+        padding: 14px 6px;
+    }
+
+    .stat:nth-child(2n) {
+        border-right: 0;
+    }
+
+    .stat:nth-child(n+3) {
+        border-bottom: 0;
     }
 
     .stat strong {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .stat span {
         margin-top: 4px;
-        font-size: 0.86rem;
+        font-size: 0.68rem;
+        line-height: 1.25;
     }
 
     .meter-face {

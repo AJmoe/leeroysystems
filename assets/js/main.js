@@ -2,7 +2,7 @@ const header = document.querySelector('[data-header]');
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('#site-menu');
 const navLinks = document.querySelectorAll('.site-nav a');
-const mobileMenuQuery = window.matchMedia('(max-width: 760px)');
+const mobileMenuQuery = window.matchMedia('(max-width: 980px)');
 const revealItems = document.querySelectorAll('.reveal');
 const tabButtons = document.querySelectorAll('[role="tab"]');
 const tabPanels = document.querySelectorAll('.tab-panel');
@@ -255,6 +255,48 @@ heroArrows.forEach((arrow) => {
         startHeroSlider();
     });
 });
+
+// Touch swipe support for the hero slider (mobile)
+const heroSliderEl = document.querySelector('[data-hero-slider]');
+if (heroSliderEl) {
+    const SWIPE_THRESHOLD = 45;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isSwiping = false;
+
+    heroSliderEl.addEventListener('touchstart', (event) => {
+        const touch = event.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        isSwiping = false;
+    }, { passive: true });
+
+    heroSliderEl.addEventListener('touchmove', (event) => {
+        const touch = event.touches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+            isSwiping = true;
+        }
+    }, { passive: true });
+
+    heroSliderEl.addEventListener('touchend', (event) => {
+        const touch = event.changedTouches[0];
+        const deltaX = touch.clientX - touchStartX;
+
+        if (isSwiping && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+            showHeroSlide(activeHeroSlide + (deltaX < 0 ? 1 : -1));
+            startHeroSlider();
+        }
+    });
+
+    // A swipe shouldn't also trigger the slide's link navigation
+    heroSliderEl.addEventListener('click', (event) => {
+        if (isSwiping) {
+            event.preventDefault();
+        }
+    }, true);
+}
 
 // show the initial (middle) slide so the page loads with content centered
 showHeroSlide(activeHeroSlide);
