@@ -4580,6 +4580,7 @@ h3 {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    overflow-anchor: none; /* the active-slide resize (below) must never nudge page scroll */
     touch-action: pan-y;
     cursor: grab;
 }

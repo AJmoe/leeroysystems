@@ -471,12 +471,21 @@ function initStoryGallery(container, photos) {
         });
     };
 
-    const syncThumbs = () => {
+    const syncThumbs = (autoScroll = true) => {
         const thumbs = scrollStrip.querySelectorAll('.story-gallery-thumb');
         thumbs.forEach((t, i) => t.classList.toggle('is-active', i === activeIndex));
+        if (!autoScroll) return;
         const activeThumb = thumbs[activeIndex];
         if (activeThumb) {
-            activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            // Scroll only the thumbnail strip itself (via scrollLeft), not
+            // scrollIntoView() - that walks up to the nearest scrollable
+            // ancestor to decide what to scroll, and in this layout that
+            // resolved to the whole document, yanking the page down every
+            // time a visitor clicked a gallery arrow.
+            const target = activeThumb.offsetLeft
+                - (scrollStrip.clientWidth / 2)
+                + (activeThumb.clientWidth / 2);
+            scrollStrip.scrollTo({ left: target, behavior: 'smooth' });
         }
     };
 
@@ -562,7 +571,7 @@ function initStoryGallery(container, photos) {
     // Set initial positions without transitions to avoid a flash on first paint
     imgElements.forEach(img => { img.style.transition = 'none'; });
     positionImages();
-    syncThumbs();
+    syncThumbs(false); // don't auto-scroll the page away from the top on first load
     requestAnimationFrame(() => requestAnimationFrame(() => {
         imgElements.forEach(img => { img.style.transition = ''; });
     }));
